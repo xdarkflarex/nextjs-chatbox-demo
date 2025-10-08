@@ -1,0 +1,203 @@
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                        RAG ALGORITHM FLOW DIAGRAM                            ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  USER INPUT: "Em bị bạn bè trêu chọc, em phải làm sao?"                     │
+└────────────────────────────────┬────────────────────────────────────────────┘
+                                 │
+                                 ▼
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  STEP 1: LOAD RAG DATA                                                      │
+│  ─────────────────────────────────────────────────────────────────────────  │
+│  • Load rag_all.json (68 entries)                                          │
+│  • Parse policies, FAQs, scenarios, templates, scripts                      │
+│  • Extract 46 Q&A pairs from Excel rows                                     │
+└────────────────────────────────┬────────────────────────────────────────────┘
+                                 │
+                                 ▼
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  STEP 2: ESCALATION LEVEL DETECTION                                         │
+│  ─────────────────────────────────────────────────────────────────────────  │
+│  detectEscalationLevel(userInput)                                           │
+│                                                                              │
+│  Check RED keywords:   ❌ (tự hại, bạo lực, tự tử...)                       │
+│  Check YELLOW keywords: ✓ (bị trêu chọc, bắt nạt...)                        │
+│  Check GREEN keywords: ❌                                                    │
+│                                                                              │
+│  ➜ RESULT: YELLOW (Cần theo dõi)                                           │
+└────────────────────────────────┬────────────────────────────────────────────┘
+                                 │
+                                 ▼
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  STEP 3: TEXT NORMALIZATION                                                 │
+│  ─────────────────────────────────────────────────────────────────────────  │
+│  normalize(userInput)                                                        │
+│                                                                              │
+│  Original: "Em bị bạn bè trêu chọc, em phải làm sao?"                       │
+│  Normalized: "em bi ban be treu choc em phai lam sao"                       │
+│                                                                              │
+│  • Lowercase                                                                 │
+│  • Remove punctuation                                                        │
+│  • Normalize whitespace                                                      │
+└────────────────────────────────┬────────────────────────────────────────────┘
+                                 │
+                                 ▼
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  STEP 4: EXTRACT Q&A FROM RAG DATA                                          │
+│  ─────────────────────────────────────────────────────────────────────────  │
+│  extractQA(ragData)                                                          │
+│                                                                              │
+│  Filter: type === 'row' && includes('Câu hỏi thường gặp')                  │
+│  Found: 46 Q&A pairs                                                         │
+│                                                                              │
+│  Example:                                                                    │
+│  Q: "Nếu em bị bạn bè trêu chọc thì nên làm gì?"                           │
+│  A: "Hãy giữ bình tĩnh, tránh phản ứng nóng giận..."                       │
+└────────────────────────────────┬────────────────────────────────────────────┘
+                                 │
+                                 ▼
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  STEP 5: FUZZY SEARCH WITH FUSE.JS                                          │
+│  ─────────────────────────────────────────────────────────────────────────  │
+│  Fuse Configuration:                                                         │
+│  • keys: [normQuestion (0.7), normText (0.3)]                               │
+│  • threshold: 0.4                                                            │
+│  • includeScore: true                                                        │
+│                                                                              │
+│  Search: "em bi ban be treu choc em phai lam sao"                           │
+│                                                                              │
+│  Top 3 Matches:                                                              │
+│  ┌─────────────────────────────────────────────────────────────────────┐   │
+│  │ [1] Score: 0.95 (95% match)                                         │   │
+│  │     Q: "Nếu em bị bạn bè trêu chọc thì nên làm gì?"                │   │
+│  │     A: "Hãy giữ bình tĩnh, tránh phản ứng nóng giận..."            │   │
+│  ├─────────────────────────────────────────────────────────────────────┤   │
+│  │ [2] Score: 0.72 (72% match)                                         │   │
+│  │     Q: "Em bị bạn bè tẩy chay thì làm sao?"                         │   │
+│  │     A: "Em nên tìm hiểu nguyên nhân bạn tẩy chay..."               │   │
+│  ├─────────────────────────────────────────────────────────────────────┤   │
+│  │ [3] Score: 0.68 (68% match)                                         │   │
+│  │     Q: "Nếu em có mâu thuẫn với bạn thân thì giải quyết thế nào?" │   │
+│  │     A: "Hãy lắng nghe, trao đổi thẳng thắn..."                     │   │
+│  └─────────────────────────────────────────────────────────────────────┘   │
+└────────────────────────────────┬────────────────────────────────────────────┘
+                                 │
+                                 ▼
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  STEP 6: FILTER RELEVANT TEMPLATES & SCENARIOS                              │
+│  ─────────────────────────────────────────────────────────────────────────  │
+│  • Templates: Check for keywords (kế hoạch, ôn, tập trung, xung đột)       │
+│    ➜ Found: 0 (không liên quan đến học tập)                                │
+│                                                                              │
+│  • Scenarios: Filter by level = YELLOW                                      │
+│    ➜ Found: 3 scenarios (bullying, cyberbullying, friend_conflict)         │
+│                                                                              │
+│  • Policies: Always include POLICY/BOUNDARY & ESCALATION_LEVELS            │
+│    ➜ Found: 2 policies                                                      │
+└────────────────────────────────┬────────────────────────────────────────────┘
+                                 │
+                                 ▼
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  STEP 7: BUILD AI CONTEXT                                                   │
+│  ─────────────────────────────────────────────────────────────────────────  │
+│  buildAIContext(searchResults, userQuery)                                   │
+│                                                                              │
+│  ╔═══════════════════════════════════════════════════════════════════════╗ │
+│  ║ === QUY ĐỊNH VÀ NGUYÊN TẮC ===                                       ║ │
+│  ║ - Vai trò: Trợ lý AI hỗ trợ thông tin & kỹ năng học tập             ║ │
+│  ║ - Không chẩn đoán y khoa/tâm lý                                      ║ │
+│  ║ - Tình huống khẩn cấp → chuyển tuyến ngay                            ║ │
+│  ║                                                                       ║ │
+│  ║ === MỨC ĐỘ TÌNH HUỐNG: YELLOW ===                                   ║ │
+│  ║ LƯU Ý: Tình huống cần theo dõi và có thể cần gặp GVCN/CVTL          ║ │
+│  ║                                                                       ║ │
+│  ║ === CÁC TÌNH HUỐNG TƯƠNG TỰ ===                                     ║ │
+│  ║                                                                       ║ │
+│  ║ [Tình huống 1] (Độ khớp: 0.95)                                      ║ │
+│  ║ Câu hỏi: Nếu em bị bạn bè trêu chọc thì nên làm gì?                 ║ │
+│  ║ Trả lời: Hãy giữ bình tĩnh, tránh phản ứng nóng giận, thẳng thắn   ║ │
+│  ║          nói với bạn là mình không thích cách đùa giỡn như thế.     ║ │
+│  ║          Nếu không cải thiện, em có thể nhờ thầy cô hỗ trợ.         ║ │
+│  ║                                                                       ║ │
+│  ║ [Tình huống 2] (Độ khớp: 0.72)                                      ║ │
+│  ║ Câu hỏi: Em bị bạn bè tẩy chay thì làm sao?                         ║ │
+│  ║ Trả lời: Em nên tìm hiểu nguyên nhân bạn tẩy chay...                ║ │
+│  ║                                                                       ║ │
+│  ║ [Tình huống 3] (Độ khớp: 0.68)                                      ║ │
+│  ║ Câu hỏi: Nếu em có mâu thuẫn với bạn thân thì giải quyết thế nào?  ║ │
+│  ║ Trả lời: Hãy lắng nghe, trao đổi thẳng thắn...                      ║ │
+│  ╚═══════════════════════════════════════════════════════════════════════╝ │
+└────────────────────────────────┬────────────────────────────────────────────┘
+                                 │
+                                 ▼
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  STEP 8: CREATE GEMINI PROMPT                                               │
+│  ─────────────────────────────────────────────────────────────────────────  │
+│  Prompt = Context + User Query + Instructions                               │
+│                                                                              │
+│  === CÂU HỎI CỦA HỌC SINH ===                                               │
+│  Em bị bạn bè trêu chọc, em phải làm sao?                                   │
+│                                                                              │
+│  === HƯỚNG DẪN TRẢ LỜI ===                                                  │
+│  - Vai trò: Trợ lý AI hỗ trợ học sinh THCS về học tập và tâm lý            │
+│  - Giọng điệu: Thân thiện, tôn trọng, không phán xét, gọi "em"              │
+│  - Dựa trên các tình huống tương tự và quy định trường học                  │
+│  - Nếu là YELLOW: Gợi ý giải pháp và khuyến nghị gặp GVCN                   │
+│  - Trả lời ngắn gọn (3-5 câu), có bước hành động rõ ràng                    │
+│  - Kết thúc bằng câu hỏi mở hoặc lời động viên                              │
+└────────────────────────────────┬────────────────────────────────────────────┘
+                                 │
+                                 ▼
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  STEP 9: CALL GEMINI API                                                    │
+│  ─────────────────────────────────────────────────────────────────────────  │
+│  callGeminiAPI(prompt)                                                       │
+│  • Model: gemini-2.0-flash                                                   │
+│  • Temperature: default                                                      │
+│  • Max tokens: default                                                       │
+└────────────────────────────────┬────────────────────────────────────────────┘
+                                 │
+                                 ▼
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  STEP 10: AI RESPONSE                                                       │
+│  ─────────────────────────────────────────────────────────────────────────  │
+│  Gemini generates contextual response based on:                             │
+│  ✓ School policies                                                           │
+│  ✓ Escalation level (YELLOW)                                                │
+│  ✓ Similar situations (95% match)                                            │
+│  ✓ Response guidelines                                                       │
+│                                                                              │
+│  Example Response:                                                           │
+│  "Em ơi, mình hiểu cảm giác bị trêu chọc rất khó chịu. Đầu tiên, em hãy    │
+│   giữ bình tĩnh và thẳng thắn nói với bạn rằng em không thích cách đùa      │
+│   giỡn đó. Nếu tình hình không cải thiện, em nên chia sẻ với thầy cô để     │
+│   được hỗ trợ kịp thời. Em có muốn mình gợi ý cách nói chuyện với bạn       │
+│   không?"                                                                    │
+└────────────────────────────────┬────────────────────────────────────────────┘
+                                 │
+                                 ▼
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  STEP 11: RETURN RESPONSE WITH METADATA                                     │
+│  ─────────────────────────────────────────────────────────────────────────  │
+│  {                                                                           │
+│    "reply": "Em ơi, mình hiểu cảm giác bị trêu chọc...",                   │
+│    "metadata": {                                                             │
+│      "level": "yellow",                                                      │
+│      "matchCount": 3,                                                        │
+│      "topMatch": "Nếu em bị bạn bè trêu chọc thì nên làm gì?"              │
+│    }                                                                         │
+│  }                                                                           │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                            KEY FEATURES                                      ║
+╠══════════════════════════════════════════════════════════════════════════════╣
+║ ✓ Multi-field fuzzy matching (Question + Full text)                         ║
+║ ✓ Weighted search (Question 70%, Text 30%)                                  ║
+║ ✓ Automatic escalation detection (RED/YELLOW/GREEN)                         ║
+║ ✓ Context-aware prompting with policies & similar cases                     ║
+║ ✓ Template integration for structured guidance                              ║
+║ ✓ Safety-first approach for emergency situations                            ║
+║ ✓ Metadata tracking for analytics                                           ║
+╚══════════════════════════════════════════════════════════════════════════════╝

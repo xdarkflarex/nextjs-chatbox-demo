@@ -1,0 +1,1026 @@
+[
+  {
+    "id": "txt-policy/boundary-8af4fdef65",
+    "title": "POLICY/BOUNDARY",
+    "type": "policy",
+    "level": null,
+    "intent": "study",
+    "audience": null,
+    "tags": [],
+    "source": "txt",
+    "text": "- Vai trò: Trợ lý AI hỗ trợ thông tin & kỹ năng học tập, định hướng giao tiếp.\n- Không chẩn đoán y khoa/tâm lý; không kê đơn; không đưa ra quyết định kỷ luật.\n- Dữ liệu nhạy cảm cần sự đồng thuận. Người dùng có quyền dừng chia sẻ và yêu cầu xóa.\n- Tình huống khẩn cấp (đỏ): tự hại, bạo lực, lạm dụng → chuyển tuyến ngay (BGH/GVCN/đường dây hỗ trợ).\n- Luôn dùng giọng điệu tôn trọng, không phán xét, ngắn gọn, có bước tiếp theo rõ ràng."
+  },
+  {
+    "id": "txt-escalation_levels-1ad79576a1",
+    "title": "ESCALATION_LEVELS",
+    "type": "policy",
+    "level": null,
+    "intent": "study",
+    "audience": null,
+    "tags": [],
+    "source": "txt",
+    "text": "- GREEN (Tự trợ giúp): căng thẳng nhẹ, bí kỹ năng học → cung cấp kế hoạch & tài nguyên.\n- YELLOW (Cần theo dõi): áp lực kéo dài, mâu thuẫn gia đình/bạn bè → khuyến nghị gặp GVCN/CVTL.\n- RED (Khẩn cấp): ý nghĩ tự hại/bạo lực, đe dọa an toàn, lộ thông tin lạm dụng → chuyển tuyến ngay."
+  },
+  {
+    "id": "txt-emergency_contacts_placeholder-61c3967ece",
+    "title": "EMERGENCY_CONTACTS_PLACEHOLDER",
+    "type": "policy",
+    "level": null,
+    "intent": "study",
+    "audience": null,
+    "tags": [],
+    "source": "txt",
+    "text": "- GVCN trực: 0xxx-xxx-xxx (7:30–17:00, T2–T6)\n- Phòng Tâm lý Học đường: 0yyy-yyy-yyy (8:00–16:30)\n- Tổng đài hỗ trợ khẩn cấp trẻ em: 111\n- Email hỗ trợ nhà trường: hotro@ten-truong.edu.vn\n* Thay bằng thông tin thực tế của trường."
+  },
+  {
+    "id": "txt-quick_replies_suggestions-b9e3a7c041",
+    "title": "QUICK_REPLIES_SUGGESTIONS",
+    "type": "policy",
+    "level": null,
+    "intent": "study",
+    "audience": null,
+    "tags": [],
+    "source": "txt",
+    "text": "- Lập kế hoạch ôn 7 ngày\n- Mẹo tập trung 30 phút\n- Em đang căng thẳng trước kiểm tra\n- Bạn bè trêu chọc – mình nên làm gì?\n- Tra cứu quy định xin phép nghỉ học\n- Nói chuyện an toàn với phụ huynh\n- Tớ muốn hẹn gặp cô/thầy tư vấn\n\n======================================\nFAQ NHÀ TRƯỜNG (THÔNG TIN – KHÔNG NHẠY CẢM)\n======================================"
+  },
+  {
+    "id": "txt-faq/nghi_hoc-b517ef54b6",
+    "title": "FAQ/NGHI_HOC",
+    "type": "faq",
+    "level": null,
+    "intent": "study",
+    "audience": null,
+    "tags": [],
+    "source": "txt",
+    "text": "Hỏi: Xin phép nghỉ học 1 ngày cần làm gì?\nĐáp: Điền đơn xin phép theo mẫu của trường (bằng giấy hoặc online), có chữ ký PHHS. Thông báo GVCN trước tiết 1. Sau khi đi học lại, nộp minh chứng (nếu có)."
+  },
+  {
+    "id": "txt-faq/hoat_dong-a0d697f69f",
+    "title": "FAQ/HOAT_DONG",
+    "type": "faq",
+    "level": null,
+    "intent": "study",
+    "audience": null,
+    "tags": [],
+    "source": "txt",
+    "text": "Hỏi: Câu lạc bộ học tập đăng ký như thế nào?\nĐáp: Truy cập cổng CLB của trường, chọn CLB và bấm Đăng ký. Thời hạn thường vào tuần 2–3 mỗi học kỳ."
+  },
+  {
+    "id": "txt-faq/hoc_bong-cd019b6a1f",
+    "title": "FAQ/HOC_BONG",
+    "type": "faq",
+    "level": null,
+    "intent": "study",
+    "audience": null,
+    "tags": [],
+    "source": "txt",
+    "text": "Hỏi: Học bổng khuyến học xét theo tiêu chí nào?\nĐáp: Điểm trung bình ≥ …; hạnh kiểm tốt; tham gia ít nhất 1 hoạt động cộng đồng. Hồ sơ gồm đơn + bảng điểm + xác nhận GVCN."
+  },
+  {
+    "id": "txt-faq/ky_luat-7d4267aabf",
+    "title": "FAQ/KY_LUAT",
+    "type": "faq",
+    "level": null,
+    "intent": "study",
+    "audience": null,
+    "tags": [],
+    "source": "txt",
+    "text": "Hỏi: Khi có xung đột ở lớp, trường xử lý ra sao?\nĐáp: Khuyến khích đối thoại có hướng dẫn; nếu tái diễn, mời phụ huynh; các biện pháp kỷ luật tuân thủ nội quy, tôn trọng nhân phẩm HS.\n\n======================================\nTÌNH HUỐNG HỌC TẬP – KỸ NĂNG (GREEN)\n======================================"
+  },
+  {
+    "id": "txt-scenario/study/exam_stress_basic-7b4312c9e4",
+    "title": "SCENARIO/STUDY/EXAM_STRESS_BASIC",
+    "type": "scenario",
+    "level": "green",
+    "intent": "general",
+    "audience": null,
+    "tags": [],
+    "source": "txt",
+    "text": "[MỨC]: GREEN"
+  },
+  {
+    "id": "txt-scenario/study/sleep_hygiene-3ecfdc1c14",
+    "title": "SCENARIO/STUDY/SLEEP_HYGIENE",
+    "type": "scenario",
+    "level": "green",
+    "intent": "sleep",
+    "audience": null,
+    "tags": [],
+    "source": "txt",
+    "text": "[MỨC]: GREEN"
+  },
+  {
+    "id": "txt-scenario/safety/bullying_in_person-94d5f1c7df",
+    "title": "SCENARIO/SAFETY/BULLYING_IN_PERSON",
+    "type": "scenario",
+    "level": "yellow",
+    "intent": "general",
+    "audience": null,
+    "tags": [],
+    "source": "txt",
+    "text": "[MỨC]: YELLOW"
+  },
+  {
+    "id": "txt-scenario/safety/cyberbullying-63a75d601d",
+    "title": "SCENARIO/SAFETY/CYBERBULLYING",
+    "type": "scenario",
+    "level": "yellow",
+    "intent": "bullying",
+    "audience": null,
+    "tags": [],
+    "source": "txt",
+    "text": "[MỨC]: YELLOW"
+  },
+  {
+    "id": "txt-scenario/relation/friend_conflict-52cc3cab20",
+    "title": "SCENARIO/RELATION/FRIEND_CONFLICT",
+    "type": "scenario",
+    "level": "yellow",
+    "intent": "general",
+    "audience": null,
+    "tags": [],
+    "source": "txt",
+    "text": "[MỨC]: YELLOW"
+  },
+  {
+    "id": "txt-scenario/crisis/self_harm_ideation-98b934f4e3",
+    "title": "SCENARIO/CRISIS/SELF_HARM_IDEATION",
+    "type": "scenario",
+    "level": "red",
+    "intent": "general",
+    "audience": null,
+    "tags": [],
+    "source": "txt",
+    "text": "[MỨC]: RED"
+  },
+  {
+    "id": "txt-scenario/crisis/violence_risk-b5d4572d6f",
+    "title": "SCENARIO/CRISIS/VIOLENCE_RISK",
+    "type": "scenario",
+    "level": "red",
+    "intent": "general",
+    "audience": null,
+    "tags": [],
+    "source": "txt",
+    "text": "[MỨC]: RED"
+  },
+  {
+    "id": "txt-template/plan/study_7_days-9b95fdebb7",
+    "title": "TEMPLATE/PLAN/STUDY_7_DAYS",
+    "type": "template",
+    "level": null,
+    "intent": "study",
+    "audience": null,
+    "tags": [],
+    "source": "txt",
+    "text": "Tiêu đề: KẾ HOẠCH ÔN 7 NGÀY (Pomodoro 25–30’)\nNgày 1: rà đề cương, chọn 3 chủ điểm yếu.\nNgày 2: Chủ điểm 1 – 2 phiên + 1 mini-test.\nNgày 3: Chủ điểm 2 – 2 phiên + flashcards.\nNgày 4: Chủ điểm 3 – 2 phiên + mindmap.\nNgày 5: Luyện đề 60’ – chữa lỗi.\nNgày 6: Ôn tóm tắt – dán ghi nhớ.\nNgày 7: Nghỉ sớm – ngủ đủ – dạo bước 15’.\nGhi chú: mỗi phiên tắt thông báo, để máy xa tay; nước lọc; hít thở 4-4-6."
+  },
+  {
+    "id": "txt-template/plan/timebox_30_min-213abcc092",
+    "title": "TEMPLATE/PLAN/TIMEBOX_30_MIN",
+    "type": "template",
+    "level": null,
+    "intent": "study",
+    "audience": null,
+    "tags": [],
+    "source": "txt",
+    "text": "1. Xác định 1 nhiệm vụ nhỏ nhất.\n2. Đặt hẹn 25–30 phút, không đa nhiệm.\n3. Nghỉ 5 phút: vươn vai, uống nước.\n4. Ghi nhanh 1–3 dòng “đã làm được gì”."
+  },
+  {
+    "id": "txt-template/conflict/meeting_guide-9c86e650a0",
+    "title": "TEMPLATE/CONFLICT/MEETING_GUIDE",
+    "type": "template",
+    "level": null,
+    "intent": "conflict",
+    "audience": null,
+    "tags": [],
+    "source": "txt",
+    "text": "Mục tiêu chung, luật nói luân phiên, khung I-message, thống nhất 1 hành động nhỏ sau buổi gặp, hẹn thời điểm xem lại.\n\n======================================\nKỊCH BẢN ĐỐI THOẠI MẪU (CÓ THỂ DÙNG LẠI)\n======================================"
+  },
+  {
+    "id": "txt-script/opening/transparent-f0d57eab00",
+    "title": "SCRIPT/OPENING/TRANSPARENT",
+    "type": "script",
+    "level": null,
+    "intent": "study",
+    "audience": null,
+    "tags": [],
+    "source": "txt",
+    "text": "“Chào em, mình là trợ lý AI của trường. Mình có thể gợi ý cách học và hướng dẫn kênh hỗ trợ. Với vấn đề nhạy cảm/khẩn cấp, mình sẽ đề xuất gặp người thật ngay nhé. Hôm nay em muốn đạt điều gì trong 10–15 phút?”"
+  },
+  {
+    "id": "txt-script/closing/summary-ea8fb22c6e",
+    "title": "SCRIPT/CLOSING/SUMMARY",
+    "type": "script",
+    "level": null,
+    "intent": "study",
+    "audience": null,
+    "tags": [],
+    "source": "txt",
+    "text": "“Tóm tắt: (1)… (2)… (3)… Bước tiếp theo: … Nếu em thấy quá tải/không an toàn, hãy liên hệ [GVCN 0xxx-xxx-xxx] hoặc 111. Mình luôn sẵn sàng khi em cần.”"
+  },
+  {
+    "id": "txt-script/bullying/report_template-55493ee60d",
+    "title": "SCRIPT/BULLYING/REPORT_TEMPLATE",
+    "type": "script",
+    "level": null,
+    "intent": "general",
+    "audience": null,
+    "tags": [],
+    "source": "txt",
+    "text": "- Việc xảy ra ở đâu, khi nào?\n- Ai liên quan/chứng kiến?\n- Mô tả hành vi/ảnh màn hình (nếu có).\n- Em mong muốn điều gì sẽ thay đổi?\n\n======================================\nTRIỂN KHAI & NHÃN DỮ LIỆU (GỢI Ý KỸ THUẬT)\n======================================"
+  },
+  {
+    "id": "txt-labelling-0262dabfdc",
+    "title": "LABELLING",
+    "type": "policy",
+    "level": null,
+    "intent": "sleep",
+    "audience": null,
+    "tags": [],
+    "source": "txt",
+    "text": "- intent: study | sleep | bullying | conflict | info | crisis\n- level: green | yellow | red\n- audience: student | parent | teacher\n- next_step: self_help | schedule_meeting | escalate_now"
+  },
+  {
+    "id": "xls-sheet1-sheet1-dong-2-2d3b55d215",
+    "title": "Sheet1 - Dòng 2",
+    "type": "row",
+    "level": null,
+    "intent": "study",
+    "audience": null,
+    "tags": [],
+    "source": "excel",
+    "text": "STT: 1\nCâu hỏi thường gặp: Em cảm thấy lo lắng trước kỳ thi, em phải làm sao?\nCâu trả lời mẫu: Hãy hít thở sâu, lập kế hoạch ôn tập theo từng phần nhỏ và nghỉ ngơi hợp lý để giảm căng thẳng. Ngoài ra em hãy luôn tự tin, suy nghĩ là mình sẽ làm tốt.\nNgười dùng mục tiêu: Học sinh THCS",
+    "meta": {
+      "STT": "1",
+      "Câu hỏi thường gặp": "Em cảm thấy lo lắng trước kỳ thi, em phải làm sao?",
+      "Câu trả lời mẫu": "Hãy hít thở sâu, lập kế hoạch ôn tập theo từng phần nhỏ và nghỉ ngơi hợp lý để giảm căng thẳng. Ngoài ra em hãy luôn tự tin, suy nghĩ là mình sẽ làm tốt.",
+      "Người dùng mục tiêu": "Học sinh THCS"
+    }
+  },
+  {
+    "id": "xls-sheet1-sheet1-dong-3-c8d20fd7d8",
+    "title": "Sheet1 - Dòng 3",
+    "type": "row",
+    "level": null,
+    "intent": "study",
+    "audience": null,
+    "tags": [],
+    "source": "excel",
+    "text": "STT: 2\nCâu hỏi thường gặp: Em học hoài nhưng không nhớ, có cách nào khắc phục?\nCâu trả lời mẫu: Em có thể dùng sơ đồ tư duy ghi lại các từ khóa trong câu thay vì đọc cả câu. Ôn theo nhóm hoặc chia nhỏ thời gian học để dễ tiếp thu. Em cần ôn lại bài học trước khi kiểm tra nhiều lần. Nếu em áp dụng các phương pháp trên mà vẫn chưa đạt hiệu quả thì em có thể liên hệ thầy cô để được hướng dẫn hoặc tham khảo đường link này thêm nhé. https://www.google.com/search?q=c%C3%A1c+ph%C6%B0%C6%A1ng+ph%C3%A1p+h%E1%BB%8Dc+b%C3%A0i+nhanh+thu%E1%BB%99c&rlz=1C1CHBD_enVN1151VN1151&oq=c%C3%A1c+ph%C6%B0%C6%A1ng+ph%C3%A1p+h%E1%BB%8Dc+b%C3%A0i+nhanh+thu%E1%BB%99c&gs_lcrp=EgZjaHJvbWUyBggAEEUYOTIICAEQABgWGB4yCggCEAAYogQYiQUyCggDEAAYgAQYogQyCggEEAAYogQYiQUyBwgFEAAY7wUyCggGEAAYgAQYogTSAQkxMjQ1NWowajeoAgCwAgA&sourceid=chrome&ie=UTF-8\nNgười dùng mục tiêu: Học sinh THCS",
+    "meta": {
+      "STT": "2",
+      "Câu hỏi thường gặp": "Em học hoài nhưng không nhớ, có cách nào khắc phục?",
+      "Câu trả lời mẫu": "Em có thể dùng sơ đồ tư duy ghi lại các từ khóa trong câu thay vì đọc cả câu. Ôn theo nhóm hoặc chia nhỏ thời gian học để dễ tiếp thu. Em cần ôn lại bài học trước khi kiểm tra nhiều lần. Nếu em áp dụng các phương pháp trên mà vẫn chưa đạt hiệu quả thì em có thể liên hệ thầy cô để được hướng dẫn hoặc tham khảo đường link này thêm nhé. https://www.google.com/search?q=c%C3%A1c+ph%C6%B0%C6%A1ng+ph%C3%A1p+h%E1%BB%8Dc+b%C3%A0i+nhanh+thu%E1%BB%99c&rlz=1C1CHBD_enVN1151VN1151&oq=c%C3%A1c+ph%C6%B0%C6%A1ng+ph%C3%A1p+h%E1%BB%8Dc+b%C3%A0i+nhanh+thu%E1%BB%99c&gs_lcrp=EgZjaHJvbWUyBggAEEUYOTIICAEQABgWGB4yCggCEAAYogQYiQUyCggDEAAYgAQYogQyCggEEAAYogQYiQUyBwgFEAAY7wUyCggGEAAYgAQYogTSAQkxMjQ1NWowajeoAgCwAgA&sourceid=chrome&ie=UTF-8",
+      "Người dùng mục tiêu": "Học sinh THCS"
+    }
+  },
+  {
+    "id": "xls-sheet1-sheet1-dong-4-9d6c04d203",
+    "title": "Sheet1 - Dòng 4",
+    "type": "row",
+    "level": null,
+    "intent": "study",
+    "audience": null,
+    "tags": [],
+    "source": "excel",
+    "text": "STT: 3\nCâu hỏi thường gặp: Làm sao để tập trung học khi ở nhà có nhiều tiếng ồn?\nCâu trả lời mẫu: Hãy chọn góc yên tĩnh, đeo tai nghe chống ồn hoặc nghe nhạc nhẹ giúp tập trung hơn.\nNgười dùng mục tiêu: Học sinh THCS",
+    "meta": {
+      "STT": "3",
+      "Câu hỏi thường gặp": "Làm sao để tập trung học khi ở nhà có nhiều tiếng ồn?",
+      "Câu trả lời mẫu": "Hãy chọn góc yên tĩnh, đeo tai nghe chống ồn hoặc nghe nhạc nhẹ giúp tập trung hơn.",
+      "Người dùng mục tiêu": "Học sinh THCS"
+    }
+  },
+  {
+    "id": "xls-sheet1-sheet1-dong-5-4d8a3ea652",
+    "title": "Sheet1 - Dòng 5",
+    "type": "row",
+    "level": null,
+    "intent": "study",
+    "audience": null,
+    "tags": [],
+    "source": "excel",
+    "text": "STT: 4\nCâu hỏi thường gặp: Nếu em bị điểm kém thì nên nói với bố mẹ thế nào?\nCâu trả lời mẫu: Hãy thành thật chia sẻ và nói với bố mẹ nguyên nhân vì sao mình học kém. Sau đó trình bày kế hoạch cải thiện và cam kết để bố mẹ hiểu và ủng hộ.\nNgười dùng mục tiêu: Học sinh THCS",
+    "meta": {
+      "STT": "4",
+      "Câu hỏi thường gặp": "Nếu em bị điểm kém thì nên nói với bố mẹ thế nào?",
+      "Câu trả lời mẫu": "Hãy thành thật chia sẻ và nói với bố mẹ nguyên nhân vì sao mình học kém. Sau đó trình bày kế hoạch cải thiện và cam kết để bố mẹ hiểu và ủng hộ.",
+      "Người dùng mục tiêu": "Học sinh THCS"
+    }
+  },
+  {
+    "id": "xls-sheet1-sheet1-dong-6-9aa70bec40",
+    "title": "Sheet1 - Dòng 6",
+    "type": "row",
+    "level": null,
+    "intent": "study",
+    "audience": null,
+    "tags": [],
+    "source": "excel",
+    "text": "STT: 5\nCâu hỏi thường gặp: Em thường hay trì hoãn việc học, làm sao để thay đổi?\nCâu trả lời mẫu: Hãy đặt mục tiêu nhỏ, hoàn thành từng bước và tự thưởng cho mình khi hoàn thành. Ngoài ra, trong thời gian đầu bạn nên nhờ sự hỗ trợ, động viên, nhắc nhở mình từ bố mẹ, người thân, bạn bè,…\nNgười dùng mục tiêu: Học sinh THCS",
+    "meta": {
+      "STT": "5",
+      "Câu hỏi thường gặp": "Em thường hay trì hoãn việc học, làm sao để thay đổi?",
+      "Câu trả lời mẫu": "Hãy đặt mục tiêu nhỏ, hoàn thành từng bước và tự thưởng cho mình khi hoàn thành. Ngoài ra, trong thời gian đầu bạn nên nhờ sự hỗ trợ, động viên, nhắc nhở mình từ bố mẹ, người thân, bạn bè,…",
+      "Người dùng mục tiêu": "Học sinh THCS"
+    }
+  },
+  {
+    "id": "xls-sheet1-sheet1-dong-7-5cc78d28eb",
+    "title": "Sheet1 - Dòng 7",
+    "type": "row",
+    "level": null,
+    "intent": "study",
+    "audience": null,
+    "tags": [],
+    "source": "excel",
+    "text": "STT: 6\nCâu hỏi thường gặp: Khi em cảm thấy buồn và không muốn nói chuyện với ai thì em nên làm gì?\nCâu trả lời mẫu: Hãy viết nhật ký, nghe nhạc hoặc chia sẻ với người đáng tin cậy để giải tỏa cảm xúc.\nNgười dùng mục tiêu: Học sinh THCS",
+    "meta": {
+      "STT": "6",
+      "Câu hỏi thường gặp": "Khi em cảm thấy buồn và không muốn nói chuyện với ai thì em nên làm gì?",
+      "Câu trả lời mẫu": "Hãy viết nhật ký, nghe nhạc hoặc chia sẻ với người đáng tin cậy để giải tỏa cảm xúc.",
+      "Người dùng mục tiêu": "Học sinh THCS"
+    }
+  },
+  {
+    "id": "xls-sheet1-sheet1-dong-8-d04e1e6924",
+    "title": "Sheet1 - Dòng 8",
+    "type": "row",
+    "level": null,
+    "intent": "study",
+    "audience": null,
+    "tags": [],
+    "source": "excel",
+    "text": "STT: 7\nCâu hỏi thường gặp: Nếu em thường xuyên lo lắng vô cớ, em phải làm gì?\nCâu trả lời mẫu: Hãy tập thể dục, hít thở sâu và tìm sự hỗ trợ từ thầy cô mà mình tin tưởng hoặc chuyên gia tâm lý để trao đổi.\nNgười dùng mục tiêu: Học sinh THCS",
+    "meta": {
+      "STT": "7",
+      "Câu hỏi thường gặp": "Nếu em thường xuyên lo lắng vô cớ, em phải làm gì?",
+      "Câu trả lời mẫu": "Hãy tập thể dục, hít thở sâu và tìm sự hỗ trợ từ thầy cô mà mình tin tưởng hoặc chuyên gia tâm lý để trao đổi.",
+      "Người dùng mục tiêu": "Học sinh THCS"
+    }
+  },
+  {
+    "id": "xls-sheet1-sheet1-dong-9-337b0a304f",
+    "title": "Sheet1 - Dòng 9",
+    "type": "row",
+    "level": null,
+    "intent": "study",
+    "audience": null,
+    "tags": [],
+    "source": "excel",
+    "text": "STT: 8\nCâu hỏi thường gặp: Khi em cảm thấy quá tải với bài vở, nên làm thế nào?\nCâu trả lời mẫu: Em nên sắp xếp lại thời gian biểu và xen kẽ thời gian nghỉ ngắn để giảm áp lực. Nên lên kế hoạch học mỗi ngày để tránh đến thời điểm kiểm tra mới học sẽ gây áp lực. Điều này sẽ khó khăn với một số bạn, tuy nhiên nếu em quyết tâm thì thầy(cô) tin là em sẽ làm được nhé.\nNgười dùng mục tiêu: Học sinh THCS",
+    "meta": {
+      "STT": "8",
+      "Câu hỏi thường gặp": "Khi em cảm thấy quá tải với bài vở, nên làm thế nào?",
+      "Câu trả lời mẫu": "Em nên sắp xếp lại thời gian biểu và xen kẽ thời gian nghỉ ngắn để giảm áp lực. Nên lên kế hoạch học mỗi ngày để tránh đến thời điểm kiểm tra mới học sẽ gây áp lực. Điều này sẽ khó khăn với một số bạn, tuy nhiên nếu em quyết tâm thì thầy(cô) tin là em sẽ làm được nhé.",
+      "Người dùng mục tiêu": "Học sinh THCS"
+    }
+  },
+  {
+    "id": "xls-sheet1-sheet1-dong-10-094bfe1ec5",
+    "title": "Sheet1 - Dòng 10",
+    "type": "row",
+    "level": null,
+    "intent": "study",
+    "audience": null,
+    "tags": [],
+    "source": "excel",
+    "text": "STT: 9\nCâu hỏi thường gặp: Em hay so sánh bản thân với bạn bè giỏi hơn, làm sao để bớt tự ti?\nCâu trả lời mẫu: Mỗi người có một tài năng riêng. Hãy tập trung vào điểm mạnh của bản thân và phát huy hết khả năng của mình em nhé.\nNgười dùng mục tiêu: Học sinh THCS",
+    "meta": {
+      "STT": "9",
+      "Câu hỏi thường gặp": "Em hay so sánh bản thân với bạn bè giỏi hơn, làm sao để bớt tự ti?",
+      "Câu trả lời mẫu": "Mỗi người có một tài năng riêng. Hãy tập trung vào điểm mạnh của bản thân và phát huy hết khả năng của mình em nhé.",
+      "Người dùng mục tiêu": "Học sinh THCS"
+    }
+  },
+  {
+    "id": "xls-sheet1-sheet1-dong-11-b138c28d1f",
+    "title": "Sheet1 - Dòng 11",
+    "type": "row",
+    "level": null,
+    "intent": "study",
+    "audience": null,
+    "tags": [],
+    "source": "excel",
+    "text": "STT: 10\nCâu hỏi thường gặp: Nếu em bị bạn bè trêu chọc thì nên làm gì?\nCâu trả lời mẫu: Hãy giữ bình tĩnh, tránh phản ứng nóng giận, thẳng thắn nói với bạn là mình không thích cách đùa giỡn như thế. Nếu không cải thiện, em có thể nhờ thầy cô hỗ trợ .\nNgười dùng mục tiêu: Học sinh THCS",
+    "meta": {
+      "STT": "10",
+      "Câu hỏi thường gặp": "Nếu em bị bạn bè trêu chọc thì nên làm gì?",
+      "Câu trả lời mẫu": "Hãy giữ bình tĩnh, tránh phản ứng nóng giận, thẳng thắn nói với bạn là mình không thích cách đùa giỡn như thế. Nếu không cải thiện, em có thể nhờ thầy cô hỗ trợ .",
+      "Người dùng mục tiêu": "Học sinh THCS"
+    }
+  },
+  {
+    "id": "xls-sheet1-sheet1-dong-12-670c07cf73",
+    "title": "Sheet1 - Dòng 12",
+    "type": "row",
+    "level": null,
+    "intent": "study",
+    "audience": null,
+    "tags": [],
+    "source": "excel",
+    "text": "STT: 11\nCâu hỏi thường gặp: Em bị bạn bè tẩy chay thì làm sao?\nCâu trả lời mẫu: Em nên tìm hiểu nguyên nhân bạn tẩy chay, có thể tìm một người bạn đáng tin cậy để tâm sự. Nếu sự việc cứ tiếp diễn, bạn chia sẻ với thầy cô để được giúp đỡ.\nNgười dùng mục tiêu: Học sinh THCS",
+    "meta": {
+      "STT": "11",
+      "Câu hỏi thường gặp": "Em bị bạn bè tẩy chay thì làm sao?",
+      "Câu trả lời mẫu": "Em nên tìm hiểu nguyên nhân bạn tẩy chay, có thể tìm một người bạn đáng tin cậy để tâm sự. Nếu sự việc cứ tiếp diễn, bạn chia sẻ với thầy cô để được giúp đỡ.",
+      "Người dùng mục tiêu": "Học sinh THCS"
+    }
+  },
+  {
+    "id": "xls-sheet1-sheet1-dong-13-7d82456b49",
+    "title": "Sheet1 - Dòng 13",
+    "type": "row",
+    "level": null,
+    "intent": "study",
+    "audience": null,
+    "tags": [],
+    "source": "excel",
+    "text": "STT: 12\nCâu hỏi thường gặp: Nếu em có mâu thuẫn với bạn thân thì giải quyết thế nào?\nCâu trả lời mẫu: Hãy lắng nghe, trao đổi thẳng thắn và xin lỗi nếu mình sai để giữ tình bạn.\nNgười dùng mục tiêu: Học sinh THCS",
+    "meta": {
+      "STT": "12",
+      "Câu hỏi thường gặp": "Nếu em có mâu thuẫn với bạn thân thì giải quyết thế nào?",
+      "Câu trả lời mẫu": "Hãy lắng nghe, trao đổi thẳng thắn và xin lỗi nếu mình sai để giữ tình bạn.",
+      "Người dùng mục tiêu": "Học sinh THCS"
+    }
+  },
+  {
+    "id": "xls-sheet1-sheet1-dong-14-96f7de5683",
+    "title": "Sheet1 - Dòng 14",
+    "type": "row",
+    "level": null,
+    "intent": "study",
+    "audience": null,
+    "tags": [],
+    "source": "excel",
+    "text": "STT: 13\nCâu hỏi thường gặp: Em ngại kết bạn mới, có cách nào để tự tin hơn?\nCâu trả lời mẫu: Hãy bắt đầu bằng nụ cười, chào hỏi và chia sẻ sở thích chung để dễ bắt chuyện.\nNgười dùng mục tiêu: Học sinh THCS",
+    "meta": {
+      "STT": "13",
+      "Câu hỏi thường gặp": "Em ngại kết bạn mới, có cách nào để tự tin hơn?",
+      "Câu trả lời mẫu": "Hãy bắt đầu bằng nụ cười, chào hỏi và chia sẻ sở thích chung để dễ bắt chuyện.",
+      "Người dùng mục tiêu": "Học sinh THCS"
+    }
+  },
+  {
+    "id": "xls-sheet1-sheet1-dong-15-7e58a53dce",
+    "title": "Sheet1 - Dòng 15",
+    "type": "row",
+    "level": null,
+    "intent": "study",
+    "audience": null,
+    "tags": [],
+    "source": "excel",
+    "text": "STT: 14\nCâu hỏi thường gặp: Nếu bạn bè rủ rê làm điều xấu thì em nên làm gì?\nCâu trả lời mẫu: Hãy kiên quyết từ chối, phân tích cho bạn hiểu điều đó không tốt và không nên làm. Nếu bạn không đồng ý em sẽ rời đi và tìm một nhóm bạn tích cực hơn để chơi cùng.\nNgười dùng mục tiêu: Học sinh THCS",
+    "meta": {
+      "STT": "14",
+      "Câu hỏi thường gặp": "Nếu bạn bè rủ rê làm điều xấu thì em nên làm gì?",
+      "Câu trả lời mẫu": "Hãy kiên quyết từ chối, phân tích cho bạn hiểu điều đó không tốt và không nên làm. Nếu bạn không đồng ý em sẽ rời đi và tìm một nhóm bạn tích cực hơn để chơi cùng.",
+      "Người dùng mục tiêu": "Học sinh THCS"
+    }
+  },
+  {
+    "id": "xls-sheet1-sheet1-dong-16-d129bd0cc8",
+    "title": "Sheet1 - Dòng 16",
+    "type": "row",
+    "level": null,
+    "intent": "study",
+    "audience": null,
+    "tags": [],
+    "source": "excel",
+    "text": "STT: 15\nCâu hỏi thường gặp: Em thấy áp lực vì bố mẹ kỳ vọng quá nhiều, em phải làm gì?\nCâu trả lời mẫu: Hãy trò chuyện với bố mẹ để họ hiểu khả năng và mong muốn của mình. Đồng thời em cũng cố gắng hết sức mình để bố mẹ thấy em luôn cố gắng không ngừng để đạt mục tiêu.\nNgười dùng mục tiêu: Học sinh THCS",
+    "meta": {
+      "STT": "15",
+      "Câu hỏi thường gặp": "Em thấy áp lực vì bố mẹ kỳ vọng quá nhiều, em phải làm gì?",
+      "Câu trả lời mẫu": "Hãy trò chuyện với bố mẹ để họ hiểu khả năng và mong muốn của mình. Đồng thời em cũng cố gắng hết sức mình để bố mẹ thấy em luôn cố gắng không ngừng để đạt mục tiêu.",
+      "Người dùng mục tiêu": "Học sinh THCS"
+    }
+  },
+  {
+    "id": "xls-sheet1-sheet1-dong-17-27daf2087b",
+    "title": "Sheet1 - Dòng 17",
+    "type": "row",
+    "level": null,
+    "intent": "study",
+    "audience": null,
+    "tags": [],
+    "source": "excel",
+    "text": "STT: 16\nCâu hỏi thường gặp: Nếu bố mẹ thường xuyên cãi nhau, em nên phản ứng thế nào?\nCâu trả lời mẫu: Hãy giữ bình tĩnh, tránh xen vào. Khi bố mẹ bình thường, em nói với bố mẹ về mong muốn của mình đối với bố mẹ.\nNgười dùng mục tiêu: Học sinh THCS",
+    "meta": {
+      "STT": "16",
+      "Câu hỏi thường gặp": "Nếu bố mẹ thường xuyên cãi nhau, em nên phản ứng thế nào?",
+      "Câu trả lời mẫu": "Hãy giữ bình tĩnh, tránh xen vào. Khi bố mẹ bình thường, em nói với bố mẹ về mong muốn của mình đối với bố mẹ.",
+      "Người dùng mục tiêu": "Học sinh THCS"
+    }
+  },
+  {
+    "id": "xls-sheet1-sheet1-dong-18-62638a811b",
+    "title": "Sheet1 - Dòng 18",
+    "type": "row",
+    "level": null,
+    "intent": "study",
+    "audience": null,
+    "tags": [],
+    "source": "excel",
+    "text": "STT: 17\nCâu hỏi thường gặp: Em bị bố mẹ so sánh với anh chị, em cảm thấy buồn, phải làm sao?\nCâu trả lời mẫu: Hãy chia sẻ cảm xúc với bố mẹ và chứng minh năng lực theo cách riêng của em.\nNgười dùng mục tiêu: Học sinh THCS",
+    "meta": {
+      "STT": "17",
+      "Câu hỏi thường gặp": "Em bị bố mẹ so sánh với anh chị, em cảm thấy buồn, phải làm sao?",
+      "Câu trả lời mẫu": "Hãy chia sẻ cảm xúc với bố mẹ và chứng minh năng lực theo cách riêng của em.",
+      "Người dùng mục tiêu": "Học sinh THCS"
+    }
+  },
+  {
+    "id": "xls-sheet1-sheet1-dong-19-af98c26146",
+    "title": "Sheet1 - Dòng 19",
+    "type": "row",
+    "level": null,
+    "intent": "study",
+    "audience": null,
+    "tags": [],
+    "source": "excel",
+    "text": "STT: 18\nCâu hỏi thường gặp: Nếu em muốn theo sở thích khác với bố mẹ thì nên nói thế nào?\nCâu trả lời mẫu: Hãy giải thích đam mê của em và cho thấy em có kế hoạch rõ ràng cho tương lai.\nNgười dùng mục tiêu: Học sinh THCS",
+    "meta": {
+      "STT": "18",
+      "Câu hỏi thường gặp": "Nếu em muốn theo sở thích khác với bố mẹ thì nên nói thế nào?",
+      "Câu trả lời mẫu": "Hãy giải thích đam mê của em và cho thấy em có kế hoạch rõ ràng cho tương lai.",
+      "Người dùng mục tiêu": "Học sinh THCS"
+    }
+  },
+  {
+    "id": "xls-sheet1-sheet1-dong-20-39f8628c7d",
+    "title": "Sheet1 - Dòng 20",
+    "type": "row",
+    "level": null,
+    "intent": "study",
+    "audience": null,
+    "tags": [],
+    "source": "excel",
+    "text": "STT: 19\nCâu hỏi thường gặp: Em thấy mình không được bố mẹ quan tâm nhiều, em nên làm gì?\nCâu trả lời mẫu: Hãy chủ động gần gũi hơn, chia sẻ cảm xúc và tạo cơ hội để gắn kết với bố mẹ.\nNgười dùng mục tiêu: Học sinh THCS",
+    "meta": {
+      "STT": "19",
+      "Câu hỏi thường gặp": "Em thấy mình không được bố mẹ quan tâm nhiều, em nên làm gì?",
+      "Câu trả lời mẫu": "Hãy chủ động gần gũi hơn, chia sẻ cảm xúc và tạo cơ hội để gắn kết với bố mẹ.",
+      "Người dùng mục tiêu": "Học sinh THCS"
+    }
+  },
+  {
+    "id": "xls-sheet1-sheet1-dong-21-2dcb7268b5",
+    "title": "Sheet1 - Dòng 21",
+    "type": "row",
+    "level": null,
+    "intent": "study",
+    "audience": null,
+    "tags": [],
+    "source": "excel",
+    "text": "STT: 20\nCâu hỏi thường gặp: Em sợ phát biểu trước lớp thì làm sao khắc phục?\nCâu trả lời mẫu: Em hãy luyện nói trước gương hoặc với nhóm nhỏ để tự tin dần lên. Ngoài ra, em có thể nghiên cứu bài mới trước ở nhà để khi đến lớp phát biểu tự tin hơn.\nNgười dùng mục tiêu: Học sinh THCS",
+    "meta": {
+      "STT": "20",
+      "Câu hỏi thường gặp": "Em sợ phát biểu trước lớp thì làm sao khắc phục?",
+      "Câu trả lời mẫu": "Em hãy luyện nói trước gương hoặc với nhóm nhỏ để tự tin dần lên. Ngoài ra, em có thể nghiên cứu bài mới trước ở nhà để khi đến lớp phát biểu tự tin hơn.",
+      "Người dùng mục tiêu": "Học sinh THCS"
+    }
+  },
+  {
+    "id": "xls-sheet1-sheet1-dong-22-b9324b9218",
+    "title": "Sheet1 - Dòng 22",
+    "type": "row",
+    "level": null,
+    "intent": "study",
+    "audience": null,
+    "tags": [],
+    "source": "excel",
+    "text": "STT: 21\nCâu hỏi thường gặp: Làm thế nào để quản lý thời gian học tập và vui chơi hợp lý?\nCâu trả lời mẫu: Hãy lập thời gian biểu rõ ràng, cân bằng giữa học và giải trí.\nNgười dùng mục tiêu: Học sinh THCS",
+    "meta": {
+      "STT": "21",
+      "Câu hỏi thường gặp": "Làm thế nào để quản lý thời gian học tập và vui chơi hợp lý?",
+      "Câu trả lời mẫu": "Hãy lập thời gian biểu rõ ràng, cân bằng giữa học và giải trí.",
+      "Người dùng mục tiêu": "Học sinh THCS"
+    }
+  },
+  {
+    "id": "xls-sheet1-sheet1-dong-23-5ec2d1a89f",
+    "title": "Sheet1 - Dòng 23",
+    "type": "row",
+    "level": null,
+    "intent": "study",
+    "audience": null,
+    "tags": [],
+    "source": "excel",
+    "text": "STT: 22\nCâu hỏi thường gặp: Em muốn rèn luyện tính kiên nhẫn thì nên bắt đầu từ đâu?\nCâu trả lời mẫu: Hãy đặt mục tiêu nhỏ, theo dõi tiến bộ và kiên trì đến cùng. Ngoài ra, em có thể trao đổi với bố mẹ để bố mẹ động viên khen thưởng, giúp đỡ em hoàn thành từng mục tiêu nhỏ\nNgười dùng mục tiêu: Học sinh THCS",
+    "meta": {
+      "STT": "22",
+      "Câu hỏi thường gặp": "Em muốn rèn luyện tính kiên nhẫn thì nên bắt đầu từ đâu?",
+      "Câu trả lời mẫu": "Hãy đặt mục tiêu nhỏ, theo dõi tiến bộ và kiên trì đến cùng. Ngoài ra, em có thể trao đổi với bố mẹ để bố mẹ động viên khen thưởng, giúp đỡ em hoàn thành từng mục tiêu nhỏ",
+      "Người dùng mục tiêu": "Học sinh THCS"
+    }
+  },
+  {
+    "id": "xls-sheet1-sheet1-dong-24-958192dad1",
+    "title": "Sheet1 - Dòng 24",
+    "type": "row",
+    "level": null,
+    "intent": "study",
+    "audience": null,
+    "tags": [],
+    "source": "excel",
+    "text": "STT: 23\nCâu hỏi thường gặp: Làm sao để tạo động lực khi em thấy chán học?\nCâu trả lời mẫu: Hãy đặt phần thưởng cho bản thân sau mỗi nhiệm vụ hoàn thành. Có thể trao đổi với bố mẹ để  động viên khen thưởng khi em hoàn thành nhiệm vụ.\nNgười dùng mục tiêu: Học sinh THCS",
+    "meta": {
+      "STT": "23",
+      "Câu hỏi thường gặp": "Làm sao để tạo động lực khi em thấy chán học?",
+      "Câu trả lời mẫu": "Hãy đặt phần thưởng cho bản thân sau mỗi nhiệm vụ hoàn thành. Có thể trao đổi với bố mẹ để  động viên khen thưởng khi em hoàn thành nhiệm vụ.",
+      "Người dùng mục tiêu": "Học sinh THCS"
+    }
+  },
+  {
+    "id": "xls-sheet1-sheet1-dong-25-14a56e8515",
+    "title": "Sheet1 - Dòng 25",
+    "type": "row",
+    "level": null,
+    "intent": "study",
+    "audience": null,
+    "tags": [],
+    "source": "excel",
+    "text": "STT: 24\nCâu hỏi thường gặp: Em muốn phát triển kỹ năng giao tiếp, cần làm gì?\nCâu trả lời mẫu: Hãy tập lắng nghe, nói chuyện với nhiều người và tham gia các hoạt động nhóm.\nNgười dùng mục tiêu: Học sinh THCS",
+    "meta": {
+      "STT": "24",
+      "Câu hỏi thường gặp": "Em muốn phát triển kỹ năng giao tiếp, cần làm gì?",
+      "Câu trả lời mẫu": "Hãy tập lắng nghe, nói chuyện với nhiều người và tham gia các hoạt động nhóm.",
+      "Người dùng mục tiêu": "Học sinh THCS"
+    }
+  },
+  {
+    "id": "xls-sheet1-sheet1-dong-26-f4edfd06a2",
+    "title": "Sheet1 - Dòng 26",
+    "type": "row",
+    "level": null,
+    "intent": "study",
+    "audience": null,
+    "tags": [],
+    "source": "excel",
+    "text": "STT: 25\nCâu hỏi thường gặp: Nếu em thường xuyên mệt mỏi, phải làm sao?\nCâu trả lời mẫu: Hãy ngủ đủ giấc, ăn uống đảm bảo đầy đủ chất dinh dưỡng và tập thể dục nhẹ nhàng mỗi ngày. Nếu không cải thiện, em nên đi kiểm tra sức khỏe.\nNgười dùng mục tiêu: Học sinh THCS",
+    "meta": {
+      "STT": "25",
+      "Câu hỏi thường gặp": "Nếu em thường xuyên mệt mỏi, phải làm sao?",
+      "Câu trả lời mẫu": "Hãy ngủ đủ giấc, ăn uống đảm bảo đầy đủ chất dinh dưỡng và tập thể dục nhẹ nhàng mỗi ngày. Nếu không cải thiện, em nên đi kiểm tra sức khỏe.",
+      "Người dùng mục tiêu": "Học sinh THCS"
+    }
+  },
+  {
+    "id": "xls-sheet1-sheet1-dong-27-8f5c934035",
+    "title": "Sheet1 - Dòng 27",
+    "type": "row",
+    "level": null,
+    "intent": "study",
+    "audience": null,
+    "tags": [],
+    "source": "excel",
+    "text": "STT: 26\nCâu hỏi thường gặp: Em hay cáu gắt với người khác, làm thế nào để kiềm chế?\nCâu trả lời mẫu: Hãy tập kiểm soát cơn tức giận bằng cách: Hãy hít thở sâu, đếm từ 1 đến 10 và bình tĩnh trước khi phản ứng.\nNgười dùng mục tiêu: Học sinh THCS",
+    "meta": {
+      "STT": "26",
+      "Câu hỏi thường gặp": "Em hay cáu gắt với người khác, làm thế nào để kiềm chế?",
+      "Câu trả lời mẫu": "Hãy tập kiểm soát cơn tức giận bằng cách: Hãy hít thở sâu, đếm từ 1 đến 10 và bình tĩnh trước khi phản ứng.",
+      "Người dùng mục tiêu": "Học sinh THCS"
+    }
+  },
+  {
+    "id": "xls-sheet1-sheet1-dong-28-7c3cbf629a",
+    "title": "Sheet1 - Dòng 28",
+    "type": "row",
+    "level": null,
+    "intent": "study",
+    "audience": null,
+    "tags": [],
+    "source": "excel",
+    "text": "STT: 27\nCâu hỏi thường gặp: Khi em cảm thấy cô đơn, em có thể làm gì?\nCâu trả lời mẫu: Hãy tham gia câu lạc bộ, nhóm học tập hoặc hoạt động ngoại khóa để kết bạn.\nNgười dùng mục tiêu: Học sinh THCS",
+    "meta": {
+      "STT": "27",
+      "Câu hỏi thường gặp": "Khi em cảm thấy cô đơn, em có thể làm gì?",
+      "Câu trả lời mẫu": "Hãy tham gia câu lạc bộ, nhóm học tập hoặc hoạt động ngoại khóa để kết bạn.",
+      "Người dùng mục tiêu": "Học sinh THCS"
+    }
+  },
+  {
+    "id": "xls-sheet1-sheet1-dong-29-580284b958",
+    "title": "Sheet1 - Dòng 29",
+    "type": "row",
+    "level": null,
+    "intent": "study",
+    "audience": null,
+    "tags": [],
+    "source": "excel",
+    "text": "STT: 28\nCâu hỏi thường gặp: Em thường xuyên dùng điện thoại quá nhiều, làm sao giảm bớt?\nCâu trả lời mẫu: Hãy giới hạn thời gian sử dụng và thay thế bằng các hoạt động khác như đọc sách, thể thao. Ngoài ra, để kỷ luật bản thân em nên nhờ bố mẹ đưa ra một số quy định về việc sử dụng điện thoại như: học bài xong mới dùng điện thoại,…\nNgười dùng mục tiêu: Học sinh THCS",
+    "meta": {
+      "STT": "28",
+      "Câu hỏi thường gặp": "Em thường xuyên dùng điện thoại quá nhiều, làm sao giảm bớt?",
+      "Câu trả lời mẫu": "Hãy giới hạn thời gian sử dụng và thay thế bằng các hoạt động khác như đọc sách, thể thao. Ngoài ra, để kỷ luật bản thân em nên nhờ bố mẹ đưa ra một số quy định về việc sử dụng điện thoại như: học bài xong mới dùng điện thoại,…",
+      "Người dùng mục tiêu": "Học sinh THCS"
+    }
+  },
+  {
+    "id": "xls-sheet1-sheet1-dong-30-799491e266",
+    "title": "Sheet1 - Dòng 30",
+    "type": "row",
+    "level": null,
+    "intent": "study",
+    "audience": null,
+    "tags": [],
+    "source": "excel",
+    "text": "STT: 29\nCâu hỏi thường gặp: Em thấy thiếu tự tin về ngoại hình, phải làm sao?\nCâu trả lời mẫu: Hãy chăm sóc sức khỏe, rèn luyện thể thao, ăn mặc gọn gàng và tập trung vào điểm mạnh của bản thân.\nNgười dùng mục tiêu: Học sinh THCS",
+    "meta": {
+      "STT": "29",
+      "Câu hỏi thường gặp": "Em thấy thiếu tự tin về ngoại hình, phải làm sao?",
+      "Câu trả lời mẫu": "Hãy chăm sóc sức khỏe, rèn luyện thể thao, ăn mặc gọn gàng và tập trung vào điểm mạnh của bản thân.",
+      "Người dùng mục tiêu": "Học sinh THCS"
+    }
+  },
+  {
+    "id": "xls-sheet1-sheet1-dong-31-ae63910c9e",
+    "title": "Sheet1 - Dòng 31",
+    "type": "row",
+    "level": null,
+    "intent": "study",
+    "audience": null,
+    "tags": [],
+    "source": "excel",
+    "text": "STT: 30\nCâu hỏi thường gặp: Em chưa biết chọn nghề gì trong tương lai, phải làm sao?\nCâu trả lời mẫu: Hãy tìm hiểu sở thích, điểm mạnh của mình và tham khảo ý kiến thầy cô, gia đình.\nNgười dùng mục tiêu: Học sinh THCS",
+    "meta": {
+      "STT": "30",
+      "Câu hỏi thường gặp": "Em chưa biết chọn nghề gì trong tương lai, phải làm sao?",
+      "Câu trả lời mẫu": "Hãy tìm hiểu sở thích, điểm mạnh của mình và tham khảo ý kiến thầy cô, gia đình.",
+      "Người dùng mục tiêu": "Học sinh THCS"
+    }
+  },
+  {
+    "id": "xls-sheet1-sheet1-dong-32-65917ab1a9",
+    "title": "Sheet1 - Dòng 32",
+    "type": "row",
+    "level": null,
+    "intent": "study",
+    "audience": null,
+    "tags": [],
+    "source": "excel",
+    "text": "STT: 31\nCâu hỏi thường gặp: Nếu em thích một nghề nhưng bố mẹ không đồng ý thì sao?\nCâu trả lời mẫu: Hãy kiên nhẫn giải thích, chứng minh sự đam mê và tìm sự ủng hộ từ thầy cô.\nNgười dùng mục tiêu: Học sinh THCS",
+    "meta": {
+      "STT": "31",
+      "Câu hỏi thường gặp": "Nếu em thích một nghề nhưng bố mẹ không đồng ý thì sao?",
+      "Câu trả lời mẫu": "Hãy kiên nhẫn giải thích, chứng minh sự đam mê và tìm sự ủng hộ từ thầy cô.",
+      "Người dùng mục tiêu": "Học sinh THCS"
+    }
+  },
+  {
+    "id": "xls-sheet1-sheet1-dong-33-c045d6c0ef",
+    "title": "Sheet1 - Dòng 33",
+    "type": "row",
+    "level": null,
+    "intent": "study",
+    "audience": null,
+    "tags": [],
+    "source": "excel",
+    "text": "STT: 32\nCâu hỏi thường gặp: Em thấy mình không giỏi môn Toán, văn, Anh, liệu có ảnh hưởng tương lai không?\nCâu trả lời mẫu: Không hẳn, vì mỗi người có thế mạnh khác nhau. Em có thể phát triển theo sở trường riêng.\nNgười dùng mục tiêu: Học sinh THCS",
+    "meta": {
+      "STT": "32",
+      "Câu hỏi thường gặp": "Em thấy mình không giỏi môn Toán, văn, Anh, liệu có ảnh hưởng tương lai không?",
+      "Câu trả lời mẫu": "Không hẳn, vì mỗi người có thế mạnh khác nhau. Em có thể phát triển theo sở trường riêng.",
+      "Người dùng mục tiêu": "Học sinh THCS"
+    }
+  },
+  {
+    "id": "xls-sheet1-sheet1-dong-34-3b9ce19a24",
+    "title": "Sheet1 - Dòng 34",
+    "type": "row",
+    "level": null,
+    "intent": "study",
+    "audience": null,
+    "tags": [],
+    "source": "excel",
+    "text": "STT: 33\nCâu hỏi thường gặp: Nếu em bị thầy cô phê bình trước lớp, em nên làm gì?\nCâu trả lời mẫu: Hãy bình tĩnh, lắng nghe và xem đó là cơ hội để cải thiện bản thân. Tuy nhiên, sau buổi học em có thể gặp riêng xin lỗi cô và em hứa sẽ điều chỉnh lỗi sai. Trao đổi với cô hãy gặp riêng em để phê bình.\nNgười dùng mục tiêu: Học sinh THCS",
+    "meta": {
+      "STT": "33",
+      "Câu hỏi thường gặp": "Nếu em bị thầy cô phê bình trước lớp, em nên làm gì?",
+      "Câu trả lời mẫu": "Hãy bình tĩnh, lắng nghe và xem đó là cơ hội để cải thiện bản thân. Tuy nhiên, sau buổi học em có thể gặp riêng xin lỗi cô và em hứa sẽ điều chỉnh lỗi sai. Trao đổi với cô hãy gặp riêng em để phê bình.",
+      "Người dùng mục tiêu": "Học sinh THCS"
+    }
+  },
+  {
+    "id": "xls-sheet1-sheet1-dong-35-2fda89221e",
+    "title": "Sheet1 - Dòng 35",
+    "type": "row",
+    "level": null,
+    "intent": "study",
+    "audience": null,
+    "tags": [],
+    "source": "excel",
+    "text": "STT: 34\nCâu hỏi thường gặp: Em thấy bạn quay cóp trong giờ kiểm tra, em nên phản ứng thế nào?\nCâu trả lời mẫu: Giữ bình tĩnh và không làm ồn ào. Hãy tập trung làm bài của mình, không nên hùa theo việc sai trái. Sau buổi kiểm tra, nếu em vẫn cảm thấy việc đó không đúng và cần được xử lý, em có thể trao đổi riêng với thầy/cô để thầy/cô xem xét, nhắc nhở hoặc xử lý phù hợp.\nNgười dùng mục tiêu: Học sinh THCS",
+    "meta": {
+      "STT": "34",
+      "Câu hỏi thường gặp": "Em thấy bạn quay cóp trong giờ kiểm tra, em nên phản ứng thế nào?",
+      "Câu trả lời mẫu": "Giữ bình tĩnh và không làm ồn ào. Hãy tập trung làm bài của mình, không nên hùa theo việc sai trái. Sau buổi kiểm tra, nếu em vẫn cảm thấy việc đó không đúng và cần được xử lý, em có thể trao đổi riêng với thầy/cô để thầy/cô xem xét, nhắc nhở hoặc xử lý phù hợp.",
+      "Người dùng mục tiêu": "Học sinh THCS"
+    }
+  },
+  {
+    "id": "xls-sheet1-sheet1-dong-36-fca0536941",
+    "title": "Sheet1 - Dòng 36",
+    "type": "row",
+    "level": null,
+    "intent": "study",
+    "audience": null,
+    "tags": [],
+    "source": "excel",
+    "text": "STT: 35\nCâu hỏi thường gặp: Khi em làm sai và bị bạn cười chê, phải làm gì?\nCâu trả lời mẫu: “Không sao đâu em, ai trong chúng ta cũng có lúc làm sai cả. Sai không đáng sợ, quan trọng là mình biết nhận ra để sửa và học được điều gì từ đó. Khi bị bạn cười chê, em đừng vội buồn hay tức giận. Hãy bình tĩnh, mỉm cười và nói nhẹ nhàng rằng em đang cố gắng học hỏi. Nếu em thấy khó chịu quá, em có thể trao đổi riêng với thầy/cô để thầy/cô giúp nói chuyện với các bạn.\nNgười dùng mục tiêu: Học sinh THCS",
+    "meta": {
+      "STT": "35",
+      "Câu hỏi thường gặp": "Khi em làm sai và bị bạn cười chê, phải làm gì?",
+      "Câu trả lời mẫu": "“Không sao đâu em, ai trong chúng ta cũng có lúc làm sai cả. Sai không đáng sợ, quan trọng là mình biết nhận ra để sửa và học được điều gì từ đó. Khi bị bạn cười chê, em đừng vội buồn hay tức giận. Hãy bình tĩnh, mỉm cười và nói nhẹ nhàng rằng em đang cố gắng học hỏi. Nếu em thấy khó chịu quá, em có thể trao đổi riêng với thầy/cô để thầy/cô giúp nói chuyện với các bạn.",
+      "Người dùng mục tiêu": "Học sinh THCS"
+    }
+  },
+  {
+    "id": "xls-sheet1-sheet1-dong-37-4d903cd93f",
+    "title": "Sheet1 - Dòng 37",
+    "type": "row",
+    "level": null,
+    "intent": "study",
+    "audience": null,
+    "tags": [],
+    "source": "excel",
+    "text": "STT: 36\nCâu hỏi thường gặp: Nếu em muốn xin lỗi bạn nhưng ngại, phải làm sao?\nCâu trả lời mẫu: Hãy bắt đầu bằng lời nói chân thành hoặc viết một lời nhắn dễ thương gửi bạn.\nNgười dùng mục tiêu: Học sinh THCS",
+    "meta": {
+      "STT": "36",
+      "Câu hỏi thường gặp": "Nếu em muốn xin lỗi bạn nhưng ngại, phải làm sao?",
+      "Câu trả lời mẫu": "Hãy bắt đầu bằng lời nói chân thành hoặc viết một lời nhắn dễ thương gửi bạn.",
+      "Người dùng mục tiêu": "Học sinh THCS"
+    }
+  },
+  {
+    "id": "xls-sheet1-sheet1-dong-38-ac532c0a07",
+    "title": "Sheet1 - Dòng 38",
+    "type": "row",
+    "level": null,
+    "intent": "study",
+    "audience": null,
+    "tags": [],
+    "source": "excel",
+    "text": "STT: 37\nCâu hỏi thường gặp: Em muốn giúp bạn mới vào lớp nhanh chóng hòa nhập, nên làm gì?\nCâu trả lời mẫu: Hãy chào hỏi, giới thiệu bạn với mọi người và cùng tham gia hoạt động nhóm.\nNgười dùng mục tiêu: Học sinh THCS",
+    "meta": {
+      "STT": "37",
+      "Câu hỏi thường gặp": "Em muốn giúp bạn mới vào lớp nhanh chóng hòa nhập, nên làm gì?",
+      "Câu trả lời mẫu": "Hãy chào hỏi, giới thiệu bạn với mọi người và cùng tham gia hoạt động nhóm.",
+      "Người dùng mục tiêu": "Học sinh THCS"
+    }
+  },
+  {
+    "id": "xls-sheet1-sheet1-dong-39-c1f2115c98",
+    "title": "Sheet1 - Dòng 39",
+    "type": "row",
+    "level": null,
+    "intent": "study",
+    "audience": null,
+    "tags": [],
+    "source": "excel",
+    "text": "STT: 38\nCâu hỏi thường gặp: Nếu em bị bắt nạt trên mạng thì làm sao?\nCâu trả lời mẫu: Em nên chặn người đó, không đáp trả và báo ngay cho thầy cô hoặc bố mẹ nếu em thấy sự việc nghiêm trọng.\nNgười dùng mục tiêu: Học sinh THCS",
+    "meta": {
+      "STT": "38",
+      "Câu hỏi thường gặp": "Nếu em bị bắt nạt trên mạng thì làm sao?",
+      "Câu trả lời mẫu": "Em nên chặn người đó, không đáp trả và báo ngay cho thầy cô hoặc bố mẹ nếu em thấy sự việc nghiêm trọng.",
+      "Người dùng mục tiêu": "Học sinh THCS"
+    }
+  },
+  {
+    "id": "xls-sheet1-sheet1-dong-40-3db1a1eb38",
+    "title": "Sheet1 - Dòng 40",
+    "type": "row",
+    "level": null,
+    "intent": "study",
+    "audience": null,
+    "tags": [],
+    "source": "excel",
+    "text": "STT: 39\nCâu hỏi thường gặp: Nếu em thấy tin giả trên mạng thì phải làm gì?\nCâu trả lời mẫu: Đừng chia sẻ vội, hãy kiểm chứng thông tin từ nguồn đáng tin cậy trước.\nNgười dùng mục tiêu: Học sinh THCS",
+    "meta": {
+      "STT": "39",
+      "Câu hỏi thường gặp": "Nếu em thấy tin giả trên mạng thì phải làm gì?",
+      "Câu trả lời mẫu": "Đừng chia sẻ vội, hãy kiểm chứng thông tin từ nguồn đáng tin cậy trước.",
+      "Người dùng mục tiêu": "Học sinh THCS"
+    }
+  },
+  {
+    "id": "xls-sheet1-sheet1-dong-41-d0e2cad46f",
+    "title": "Sheet1 - Dòng 41",
+    "type": "row",
+    "level": null,
+    "intent": "study",
+    "audience": null,
+    "tags": [],
+    "source": "excel",
+    "text": "STT: 40\nCâu hỏi thường gặp: Em muốn sử dụng Internet an toàn, cần lưu ý gì?\nCâu trả lời mẫu: Không chia sẻ thông tin cá nhân, không gặp người lạ qua mạng và cảnh giác với lừa đảo.\nNgười dùng mục tiêu: Học sinh THCS",
+    "meta": {
+      "STT": "40",
+      "Câu hỏi thường gặp": "Em muốn sử dụng Internet an toàn, cần lưu ý gì?",
+      "Câu trả lời mẫu": "Không chia sẻ thông tin cá nhân, không gặp người lạ qua mạng và cảnh giác với lừa đảo.",
+      "Người dùng mục tiêu": "Học sinh THCS"
+    }
+  },
+  {
+    "id": "xls-sheet1-sheet1-dong-42-7392cee45c",
+    "title": "Sheet1 - Dòng 42",
+    "type": "row",
+    "level": null,
+    "intent": "study",
+    "audience": null,
+    "tags": [],
+    "source": "excel",
+    "text": "STT: 41\nCâu hỏi thường gặp: Nếu em bị nghiện game, phải làm sao?\nCâu trả lời mẫu: Em có thể thử ba bước nhỏ để dần kiểm soát việc chơi game nhé:Tự đặt giới hạn thời gian. Ví dụ chỉ chơi 30–45 phút sau khi hoàn thành bài tập hoặc công việc cần làm.Tìm hoạt động khác thay thế. Nhờ sự giúp đỡ – Nếu em thấy khó tự dừng, hãy chia sẻ với cha mẹ hoặc thầy cô. Mọi người sẽ cùng em tìm cách cân bằng lại. Cô tin em làm được.\nNgười dùng mục tiêu: Học sinh THCS",
+    "meta": {
+      "STT": "41",
+      "Câu hỏi thường gặp": "Nếu em bị nghiện game, phải làm sao?",
+      "Câu trả lời mẫu": "Em có thể thử ba bước nhỏ để dần kiểm soát việc chơi game nhé:Tự đặt giới hạn thời gian. Ví dụ chỉ chơi 30–45 phút sau khi hoàn thành bài tập hoặc công việc cần làm.Tìm hoạt động khác thay thế. Nhờ sự giúp đỡ – Nếu em thấy khó tự dừng, hãy chia sẻ với cha mẹ hoặc thầy cô. Mọi người sẽ cùng em tìm cách cân bằng lại. Cô tin em làm được.",
+      "Người dùng mục tiêu": "Học sinh THCS"
+    }
+  },
+  {
+    "id": "xls-sheet1-sheet1-dong-43-ae66692eff",
+    "title": "Sheet1 - Dòng 43",
+    "type": "row",
+    "level": null,
+    "intent": "study",
+    "audience": null,
+    "tags": [],
+    "source": "excel",
+    "text": "STT: 42\nCâu hỏi thường gặp: Em thấy mình dễ nổi nóng khi bị góp ý, phải làm sao?\nCâu trả lời mẫu: Hãy hít thở sâu, tập lắng nghe trọn vẹn rồi phản hồi sau khi đã bình tĩnh.\nNgười dùng mục tiêu: Học sinh THCS",
+    "meta": {
+      "STT": "42",
+      "Câu hỏi thường gặp": "Em thấy mình dễ nổi nóng khi bị góp ý, phải làm sao?",
+      "Câu trả lời mẫu": "Hãy hít thở sâu, tập lắng nghe trọn vẹn rồi phản hồi sau khi đã bình tĩnh.",
+      "Người dùng mục tiêu": "Học sinh THCS"
+    }
+  },
+  {
+    "id": "xls-sheet1-sheet1-dong-44-16b16f7ef7",
+    "title": "Sheet1 - Dòng 44",
+    "type": "row",
+    "level": null,
+    "intent": "study",
+    "audience": null,
+    "tags": [],
+    "source": "excel",
+    "text": "STT: 43\nCâu hỏi thường gặp: Em muốn tăng sự tự tin trước đám đông, nên làm gì?\nCâu trả lời mẫu: Hãy chuẩn bị kỹ nội dung, luyện tập nhiều lần và tự nhủ mình có thể làm được.\nNgười dùng mục tiêu: Học sinh THCS",
+    "meta": {
+      "STT": "43",
+      "Câu hỏi thường gặp": "Em muốn tăng sự tự tin trước đám đông, nên làm gì?",
+      "Câu trả lời mẫu": "Hãy chuẩn bị kỹ nội dung, luyện tập nhiều lần và tự nhủ mình có thể làm được.",
+      "Người dùng mục tiêu": "Học sinh THCS"
+    }
+  },
+  {
+    "id": "xls-sheet1-sheet1-dong-45-264def38aa",
+    "title": "Sheet1 - Dòng 45",
+    "type": "row",
+    "level": null,
+    "intent": "study",
+    "audience": null,
+    "tags": [],
+    "source": "excel",
+    "text": "STT: 44\nCâu hỏi thường gặp: Em thấy bạn thân thay đổi, ít quan tâm đến em, nên xử lý ra sao?\nCâu trả lời mẫu: Hãy trò chuyện thẳng thắn, chia sẻ cảm xúc và tìm hiểu nguyên nhân.\nNgười dùng mục tiêu: Học sinh THCS",
+    "meta": {
+      "STT": "44",
+      "Câu hỏi thường gặp": "Em thấy bạn thân thay đổi, ít quan tâm đến em, nên xử lý ra sao?",
+      "Câu trả lời mẫu": "Hãy trò chuyện thẳng thắn, chia sẻ cảm xúc và tìm hiểu nguyên nhân.",
+      "Người dùng mục tiêu": "Học sinh THCS"
+    }
+  },
+  {
+    "id": "xls-sheet1-sheet1-dong-46-42c7846588",
+    "title": "Sheet1 - Dòng 46",
+    "type": "row",
+    "level": null,
+    "intent": "study",
+    "audience": null,
+    "tags": [],
+    "source": "excel",
+    "text": "STT: 45\nCâu hỏi thường gặp: Nếu em bị điểm kém liên tiếp, cảm thấy chán nản, nên làm gì?\nCâu trả lời mẫu: Hãy tìm nguyên nhân, xin thầy cô hướng dẫn thêm và tham khảo các phương pháp học hiệu quả. Ngoài ra em cần chia sẻ với bố mẹ để hỗ trợ em.\nNgười dùng mục tiêu: Học sinh THCS",
+    "meta": {
+      "STT": "45",
+      "Câu hỏi thường gặp": "Nếu em bị điểm kém liên tiếp, cảm thấy chán nản, nên làm gì?",
+      "Câu trả lời mẫu": "Hãy tìm nguyên nhân, xin thầy cô hướng dẫn thêm và tham khảo các phương pháp học hiệu quả. Ngoài ra em cần chia sẻ với bố mẹ để hỗ trợ em.",
+      "Người dùng mục tiêu": "Học sinh THCS"
+    }
+  },
+  {
+    "id": "xls-sheet1-sheet1-dong-47-f4fa78140f",
+    "title": "Sheet1 - Dòng 47",
+    "type": "row",
+    "level": null,
+    "intent": "study",
+    "audience": null,
+    "tags": [],
+    "source": "excel",
+    "text": "STT: 46\nCâu hỏi thường gặp: Em muốn vừa học tốt vừa có thời gian giải trí, có thể không?\nCâu trả lời mẫu: Hoàn toàn có, nếu em biết sắp xếp thời gian hợp lý và kiên trì thực hiện.\nNgười dùng mục tiêu: Học sinh THCS",
+    "meta": {
+      "STT": "46",
+      "Câu hỏi thường gặp": "Em muốn vừa học tốt vừa có thời gian giải trí, có thể không?",
+      "Câu trả lời mẫu": "Hoàn toàn có, nếu em biết sắp xếp thời gian hợp lý và kiên trì thực hiện.",
+      "Người dùng mục tiêu": "Học sinh THCS"
+    }
+  }
+]
