@@ -116,13 +116,13 @@ export default function AdminDashboard() {
   }
 
   return (
-    <div className="p-8 max-w-6xl mx-auto bg-gradient-to-br from-blue-50 to-blue-100 min-h-screen rounded-xl shadow-xl flex flex-col md:flex-row gap-8">
+    <div className="p-3 sm:p-6 md:p-8 max-w-6xl mx-auto bg-gradient-to-br from-blue-50 to-blue-100 min-h-screen rounded-xl shadow-xl flex flex-col md:flex-row gap-4 sm:gap-6 md:gap-8">
       <div className="md:w-1/3 w-full">
-        <div className="flex items-center gap-3 mb-6">
-          <span className="inline-block bg-blue-600 text-white rounded-full p-2 text-xl shadow">
+        <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
+          <span className="inline-block bg-blue-600 text-white rounded-full p-1.5 sm:p-2 text-xl shadow flex-shrink-0">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
+              className="h-5 w-5 sm:h-6 sm:w-6"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -135,7 +135,7 @@ export default function AdminDashboard() {
               />
             </svg>
           </span>
-          <h1 className="text-2xl font-bold text-blue-800">
+          <h1 className="text-lg sm:text-xl md:text-2xl font-bold text-blue-800">
             Danh sách phiên chat
           </h1>
         </div>
@@ -145,30 +145,30 @@ export default function AdminDashboard() {
             <button
               key={session.id}
               onClick={() => setSelected(idx)}
-              className={`w-full text-left p-4 rounded-xl border-2 bg-white shadow hover:shadow-xl transition-all duration-300 flex flex-col gap-1 ${selected === idx ? "ring-2 ring-blue-400" : ""} ${deleted === session.id ? "opacity-0 scale-95 pointer-events-none" : "opacity-100 scale-100"} ${session.isEmergency ? "border-red-500 bg-red-50 animate-pulse" : session.processed ? "border-green-400 bg-green-50" : "border-blue-200"}`}
+              className={`w-full text-left p-3 sm:p-4 rounded-lg sm:rounded-xl border-2 bg-white shadow hover:shadow-xl transition-all duration-300 flex flex-col gap-1 ${selected === idx ? "ring-2 ring-blue-400" : ""} ${deleted === session.id ? "opacity-0 scale-95 pointer-events-none" : "opacity-100 scale-100"} ${session.isEmergency ? "border-red-500 bg-red-50 animate-pulse" : session.processed ? "border-green-400 bg-green-50" : "border-blue-200"}`}
               style={{ transitionProperty: "opacity,transform" }}
             >
               <div className="flex items-start gap-2">
-                <div className="font-semibold text-blue-700 flex-1 break-words">
+                <div className="font-semibold text-blue-700 flex-1 break-words text-sm sm:text-base line-clamp-2">
                   {getPreview(session)}
                 </div>
-                <div className="flex gap-1 flex-wrap">
+                <div className="flex gap-1 flex-wrap flex-shrink-0">
                   {session.isEmergency && (
-                    <span className="px-2 py-0.5 rounded-full bg-red-500 text-white text-xs font-bold whitespace-nowrap flex items-center gap-1">
+                    <span className="px-1.5 sm:px-2 py-0.5 rounded-full bg-red-500 text-white text-xs font-bold whitespace-nowrap flex items-center gap-1">
                       <svg className="h-3 w-3" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd"/></svg>
-                      Khẩn cấp
+                      <span className="hidden sm:inline">Khẩn cấp</span>
                     </span>
                   )}
                   {session.processed && (
-                    <span className="px-2 py-0.5 rounded-full bg-green-400 text-white text-xs font-bold whitespace-nowrap">Đã xử lý</span>
+                    <span className="px-1.5 sm:px-2 py-0.5 rounded-full bg-green-400 text-white text-xs font-bold whitespace-nowrap">✓</span>
                   )}
                 </div>
               </div>
-              <div className="flex items-center gap-2 text-xs text-gray-400">
-                <span>{new Date(session.time).toLocaleString()}</span>
+              <div className="flex items-center gap-1 sm:gap-2 text-xs text-gray-400 flex-wrap">
+                <span className="text-xs">{new Date(session.time).toLocaleString('vi-VN', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</span>
                 {session.userRole && (
-                  <span className="px-2 py-0.5 rounded bg-blue-100 text-blue-700 font-semibold">
-                    {session.userRole === 'student' ? '🎓 Học sinh' : session.userRole === 'teacher' ? '👨‍🏫 Giáo viên' : '👨‍👩‍👧 Phụ huynh'}
+                  <span className="px-1.5 sm:px-2 py-0.5 rounded bg-blue-100 text-blue-700 font-semibold text-xs">
+                    {session.userRole === 'student' ? '🎓' : session.userRole === 'teacher' ? '👨‍🏫' : '👨‍👩‍👧'}
                   </span>
                 )}
               </div>
@@ -178,32 +178,32 @@ export default function AdminDashboard() {
       </div>
       <div className="md:w-2/3 w-full">
         {sessions[selected] ? (
-          <div className="bg-white rounded-xl shadow-lg border-2 border-blue-200 flex flex-col h-full">
-            <div className="flex items-center justify-between p-6 border-b border-gray-200">
-              <div className="font-bold text-blue-700 text-lg">
+          <div className="bg-white rounded-lg sm:rounded-xl shadow-lg border-2 border-blue-200 flex flex-col h-full">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-3 sm:p-4 md:p-6 border-b border-gray-200 gap-2 sm:gap-0">
+              <div className="font-bold text-blue-700 text-base sm:text-lg">
                 Chi tiết phiên chat
               </div>
-              <div className="flex gap-2">
+              <div className="flex gap-2 w-full sm:w-auto">
                 <button
                   onClick={() => handleProcess(sessions[selected].id)}
-                  className={`px-3 py-1 rounded font-semibold shadow transition-all duration-300 ${sessions[selected].processed ? "bg-green-400 text-white cursor-not-allowed" : "bg-blue-600 text-white hover:bg-blue-700"} ${processing === sessions[selected].id ? "opacity-60 cursor-wait" : ""}`}
+                  className={`flex-1 sm:flex-initial px-2 sm:px-3 py-1 text-xs sm:text-sm rounded font-semibold shadow transition-all duration-300 ${sessions[selected].processed ? "bg-green-400 text-white cursor-not-allowed" : "bg-blue-600 text-white hover:bg-blue-700"} ${processing === sessions[selected].id ? "opacity-60 cursor-wait" : ""}`}
                   disabled={sessions[selected].processed || processing === sessions[selected].id}
                 >
                   {sessions[selected].processed
-                    ? "Đã xử lý"
+                    ? "✓ Đã xử lý"
                     : processing === sessions[selected].id
                     ? "Đang xử lý..."
-                    : "Đánh dấu đã xử lý"}
+                    : "Đánh dấu"}
                 </button>
                 <button
                   onClick={() => handleDelete(sessions[selected].id)}
-                  className="px-3 py-1 rounded bg-red-100 text-red-700 border border-red-300 hover:bg-red-200 font-semibold shadow transition-all duration-300"
+                  className="flex-1 sm:flex-initial px-2 sm:px-3 py-1 text-xs sm:text-sm rounded bg-red-100 text-red-700 border border-red-300 hover:bg-red-200 font-semibold shadow transition-all duration-300"
                 >
-                  Xóa phiên chat
+                  Xóa
                 </button>
               </div>
             </div>
-            <div className="flex-1 overflow-y-auto p-6 bg-gradient-to-b from-gray-50 to-white">
+            <div className="flex-1 overflow-y-auto p-3 sm:p-4 md:p-6 bg-gradient-to-b from-gray-50 to-white">
               <div className="space-y-3">
               {sessions[selected].isEmergency && (
                 <div className="mb-3 p-4 rounded-xl bg-red-100 border-2 border-red-400">

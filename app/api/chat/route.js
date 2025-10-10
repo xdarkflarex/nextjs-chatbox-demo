@@ -158,6 +158,71 @@ function searchRAG(userQuery, ragData) {
   };
 }
 
+// Hàm xây dựng context từ Smart Retrieval (TỐI ƯU - GIẢM TOKEN)
+function buildSmartContext(smartResults, userQuery) {
+  if (!smartResults.results || smartResults.results.length === 0) {
+    return '';
+  }
+  
+  let context = '=== THÔNG TIN TRƯỜNG ===\n';
+  let itemCount = 0;
+  const maxItems = 3; // Giới hạn 3 kết quả để giảm token
+  
+  for (const result of smartResults.results) {
+    if (itemCount >= maxItems) break;
+    
+    const data = result.data;
+    
+    // 1. LIÊN HỆ (Compact)
+    if (data.contact) {
+      context += `📞 ${data.contact.class}: ${data.contact.name} - ${data.contact.phone}\n`;
+      itemCount++;
+    }
+    // 2. QUY ĐỊNH CHẤM ĐIỂM (Compact)
+    else if (data.sodb_scoring) {
+      context += `📋 Sổ đầu bài: ${data.sodb_scoring.total_per_period} điểm/tiết (Học tập, Kỷ luật, Vệ sinh, Chuyên cần: mỗi ${data.sodb_scoring.criteria[0]?.max} điểm)\n`;
+      itemCount++;
+    }
+    // 3. SAO ĐỎ (Compact)
+    else if (data.saodo_rules) {
+      context += `⭐ Sao đỏ: Nộp ${data.saodo_rules.submission}\n`;
+      itemCount++;
+    }
+    // 4. THI ĐUA (Compact)
+    else if (data.class_competition) {
+      context += `🏆 Thi đua: ${data.class_competition.weekly_formula}\n`;
+      itemCount++;
+    }
+    // 5. LỊCH TRỰC (Compact)
+    else if (data.duty && smartResults.details?.weekday) {
+      const day = smartResults.details.weekday;
+      const schedule = data.duty.weekly?.[day];
+      if (schedule) {
+        context += `📅 ${day}: Sáng ${schedule.morning}, Chiều ${schedule.afternoon}\n`;
+        itemCount++;
+      }
+    }
+    // 6. PHÒNG HỌC (Compact)
+    else if (data.rooms && smartResults.details?.class && data._foundRoom) {
+      context += `🏫 Lớp ${smartResults.details.class}: Phòng ${data._foundRoom}\n`;
+      itemCount++;
+    }
+    // 7. HÒA NHẬP (Compact)
+    else if (data.inclusive) {
+      context += `♿ Giáo dục hòa nhập: Liên hệ ${data.inclusive.contacts?.deputy_principal_inclusive || 'BGH'}\n`;
+      itemCount++;
+    }
+    // 8. DỮ LIỆU RAW (Compact)
+    else if (data.text) {
+      const preview = data.text.substring(0, 150).replace(/\n/g, ' ');
+      context += `📄 ${data.title || 'Thông tin'}: ${preview}...\n`;
+      itemCount++;
+    }
+  }
+  
+  return context + '\n';
+}
+
 // Hàm xây dựng context cho AI
 function buildAIContext(searchResults, userQuery) {
   const { level, policies, topMatches, templates, scenarios } = searchResults;
@@ -233,7 +298,24 @@ export async function POST(request) {
     });
   }
 
-  // Đọc file RAG
+  // ========== BƯỚC 1: TÌM KIẾM THÔNG MINH (DIRECT CALL) ==========
+  let smartResults = null;
+  try {
+    // Gọi trực tiếp hàm thay vì fetch để tránh lỗi internal request
+    const { searchSmartRetrieval } = await import('./smart-retrieval-lib.js');
+    smartResults = await searchSmartRetrieval(last);
+    
+    if (smartResults && smartResults.results?.length > 0) {
+      console.log('✅ Smart retrieval:', {
+        intent: smartResults.intent,
+        resultsCount: smartResults.results.length
+      });
+    }
+  } catch (error) {
+    console.error('⚠️ Smart retrieval failed, fallback to old method:', error.message);
+  }
+
+  // ========== BƯỚC 2: FALLBACK - TÌM KIẾM RAG CŨ ==========
   const ragPath = path.join(process.cwd(), "app/public/data/rag_all.json");
   let ragData = [];
   try {
@@ -243,7 +325,7 @@ export async function POST(request) {
     console.error('Error loading RAG data:', error);
   }
 
-  // Tìm kiếm RAG
+  // Tìm kiếm RAG (vẫn giữ để backup)
   const searchResults = searchRAG(last, ragData);
   console.log('Search results:', {
     level: searchResults.level,
@@ -251,8 +333,22 @@ export async function POST(request) {
     topMatch: searchResults.topMatches[0]?.item?.question
   });
 
-  // Xây dựng context cho AI
-  const context = buildAIContext(searchResults, last);
+  // ========== BƯỚC 3: KẾT HỢP CONTEXT ==========
+  let context = '';
+  
+  // Ưu tiên smart retrieval nếu có kết quả tốt
+  if (smartResults && smartResults.results?.length > 0) {
+    const smartContext = buildSmartContext(smartResults, last);
+    if (smartContext && smartContext.length > 50) {
+      context = smartContext + '\n\n';
+      console.log('📌 Using smart context:', smartContext.substring(0, 100) + '...');
+    }
+  }
+  
+  // Bổ sung context từ RAG cũ
+  const ragContext = buildAIContext(searchResults, last);
+  context += ragContext;
+  
   const level = searchResults.level;
   
   // Tùy chỉnh prompt theo vai trò

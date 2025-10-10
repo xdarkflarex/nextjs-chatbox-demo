@@ -7,3 +7,98 @@
 }
 
 * { box-sizing: border-box; }
+
+/* ===== MOBILE RESPONSIVE FIXES ===== */
+
+/* Đảm bảo body full height */
+html, body {
+  height: 100%;
+  overflow-x: hidden;
+}
+
+/* Fix cho mobile viewport */
+@media (max-width: 640px) {
+  /* Container padding cho mobile */
+  .chat-container {
+    margin: 0.5rem !important;
+    max-width: 100% !important;
+  }
+  
+  /* Header compact trên mobile */
+  .chat-header-title {
+    font-size: 1rem !important;
+  }
+  
+  .chat-header-subtitle {
+    display: none; /* Ẩn subtitle trên mobile rất nhỏ */
+  }
+  
+  /* Buttons nhỏ gọn hơn */
+  .role-button {
+    font-size: 0.75rem !important;
+    padding: 0.5rem 0.75rem !important;
+  }
+  
+  .quick-question-btn {
+    font-size: 0.7rem !important;
+    padding: 0.375rem 0.625rem !important;
+  }
+  
+  /* Chat area responsive height */
+  .chat-messages {
+    min-height: 50vh !important;
+    max-height: 60vh !important;
+  }
+  
+  /* Input form stack trên mobile nhỏ */
+  .chat-input-form {
+    flex-direction: column !important;
+    gap: 0.5rem !important;
+  }
+  
+  .chat-input-form input {
+    width: 100% !important;
+  }
+  
+  .chat-input-form button {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+}
+
+/* Fix cho màn hình rất nhỏ (<360px) */
+@media (max-width: 360px) {
+  .chat-container {
+    margin: 0.25rem !important;
+    border-radius: 1rem !important;
+  }
+  
+  .chat-bubble {
+    max-width: 85% !important;
+    font-size: 0.8rem !important;
+  }
+  
+  .quick-question-btn {
+    font-size: 0.65rem !important;
+    padding: 0.25rem 0.5rem !important;
+  }
+}
+
+/* Fix cho landscape mobile */
+@media (max-height: 500px) and (orientation: landscape) {
+  .chat-messages {
+    min-height: 30vh !important;
+    max-height: 40vh !important;
+  }
+  
+  .chat-container {
+    margin: 0.25rem !important;
+  }
+}
+
+/* Fix cho tablet */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .chat-container {
+    max-width: 90% !important;
+  }
+}
