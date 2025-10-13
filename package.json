@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test:rag": "node test-rag-quick.js",
+    "test:rag-full": "node test-rag-gemini-integration.js"
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.1",
