@@ -1,6 +1,8 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
+import Link from "next/link";
 
 function getPreview(session) {
   // Ưu tiên hiển thị summary nếu có, không thì hiển thị câu đầu
@@ -116,29 +118,64 @@ export default function AdminDashboard() {
   }
 
   return (
-    <div className="p-3 sm:p-6 md:p-8 max-w-6xl mx-auto bg-gradient-to-br from-blue-50 to-blue-100 min-h-screen rounded-xl shadow-xl flex flex-col md:flex-row gap-4 sm:gap-6 md:gap-8">
-      <div className="md:w-1/3 w-full">
-        <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
-          <span className="inline-block bg-blue-600 text-white rounded-full p-1.5 sm:p-2 text-xl shadow flex-shrink-0">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5 sm:h-6 sm:w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-100 p-4 md:p-6">
+      {/* Header với logo */}
+      <div className="max-w-7xl mx-auto mb-6">
+        <div className="bg-white rounded-2xl shadow-xl p-4 md:p-6 border-2 border-blue-200">
+          <div className="flex items-center justify-between flex-wrap gap-4">
+            {/* Logo + Tên */}
+            <div className="flex items-center gap-4">
+              <div className="relative w-16 h-16 md:w-20 md:h-20 rounded-full overflow-hidden border-4 border-blue-500 shadow-lg bg-white flex-shrink-0">
+                <Image
+                  src="/logo-nguyen-hue.jpg"
+                  alt="Logo THCS Nguyễn Huệ"
+                  fill
+                  className="object-cover"
+                  unoptimized
+                />
+              </div>
+              <div>
+                <h1 className="text-xl md:text-2xl font-extrabold text-blue-800">
+                  THCS Nguyễn Huệ
+                </h1>
+                <p className="text-sm text-blue-600 font-medium">
+                  Quản lý phiên chat trợ lý AI
+                </p>
+              </div>
+            </div>
+
+            {/* Nút đăng xuất */}
+            <Link
+              href="/"
+              onClick={() => localStorage.removeItem("admin")}
+              className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-xl font-semibold shadow-lg hover:from-red-600 hover:to-red-700 transition-all transform hover:scale-105"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M8 10h.01M12 10h.01M16 10h.01M9 16h6m2 2a9 9 0 11-18 0 9 9 0 0118 0z"
-              />
-            </svg>
-          </span>
-          <h1 className="text-lg sm:text-xl md:text-2xl font-bold text-blue-800">
-            Danh sách phiên chat
-          </h1>
+              <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+              </svg>
+              <span>Đăng xuất</span>
+            </Link>
+          </div>
         </div>
+      </div>
+
+      {/* Main content */}
+      <div className="max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          {/* Cột trái: Danh sách */}
+          <div className="lg:col-span-4">
+            <div className="bg-white rounded-2xl shadow-xl p-4 md:p-6 border-2 border-blue-200">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="bg-blue-100 p-3 rounded-xl">
+                  <svg className="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                  </svg>
+                </div>
+                <div>
+                  <h2 className="text-lg font-bold text-gray-800">Danh sách phiên chat</h2>
+                  <p className="text-sm text-gray-500">{sessions.length} phiên</p>
+                </div>
+              </div>
         <div className="space-y-3">
           {sessions.length === 0 && <div>Chưa có dữ liệu.</div>}
           {sessions.map((session, idx) => (
@@ -175,8 +212,11 @@ export default function AdminDashboard() {
             </button>
           ))}
         </div>
-      </div>
-      <div className="md:w-2/3 w-full">
+            </div>
+          </div>
+
+          {/* Cột phải: Chi tiết */}
+          <div className="lg:col-span-8">
         {sessions[selected] ? (
           <div className="bg-white rounded-lg sm:rounded-xl shadow-lg border-2 border-blue-200 flex flex-col h-full">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-3 sm:p-4 md:p-6 border-b border-gray-200 gap-2 sm:gap-0">
@@ -257,6 +297,8 @@ export default function AdminDashboard() {
             Chọn một phiên chat để xem chi tiết.
           </div>
         )}
+          </div>
+        </div>
       </div>
     </div>
   );

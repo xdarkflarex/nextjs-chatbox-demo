@@ -16,8 +16,8 @@ async function callGeminiAPI(prompt) {
 
     // Khởi tạo Gemini AI với API key
     const genAI = new GoogleGenerativeAI(apiKey);
-    // Sử dụng model mới nhất: gemini-2.0-flash (nhanh và miễn phí)
-    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+    // Sử dụng model mới nhất: gemini-2.0-flash-exp (experimental - đang hoạt động)
+    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash-exp" });
 
     console.log('Calling Gemini API with prompt length:', String(prompt).length);
 

@@ -11,9 +11,9 @@ async function testGemini() {
   
   try {
     const genAI = new GoogleGenerativeAI(apiKey);
-    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash-exp" });
     
-    console.log('\n🚀 Testing gemini-2.0-flash...');
+    console.log('\n🚀 Testing gemini-2.0-flash-exp...');
     const result = await model.generateContent("Chào bạn! Hãy giới thiệu về bản thân bằng tiếng Việt.");
     const response = await result.response;
     const text = response.text();
