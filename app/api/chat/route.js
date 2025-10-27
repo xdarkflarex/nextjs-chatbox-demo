@@ -19,41 +19,82 @@ async function callGeminiAPI(prompt) {
   let lastError = null;
   
   for (let attempt = 1; attempt <= maxRetries; attempt++) {
-    let currentApiKey = null;
+    let currentConfig = null;
     
     try {
-      // Lấy API key tiếp theo (rotation)
-      currentApiKey = getNextApiKey();
+      // Lấy API config tiếp theo (rotation: Gemini 1 → Gemini 2 → DeepSeek)
+      currentConfig = getNextApiKey();
       
-      if (!currentApiKey) {
-        console.error('❌ Missing GEMINI_API_KEY in .env.local');
+      if (!currentConfig || !currentConfig.key) {
+        console.error('❌ No API keys configured in .env.local');
         return 'Đang tạm thời không thể kết nối dịch vụ AI. Vui lòng thử lại sau.';
       }
 
-      // Khởi tạo Gemini AI với API key
-      const genAI = new GoogleGenerativeAI(currentApiKey);
-      // Sử dụng model mới nhất: gemini-2.0-flash-exp
-      const model = genAI.getGenerativeModel({ 
-        model: "gemini-2.0-flash-exp",
-        generationConfig: {
-          temperature: 0.7,
-          topP: 0.95,
-          topK: 40,
-          maxOutputTokens: 2048,
+      console.log(`🔄 Attempt ${attempt}/${maxRetries} - Using ${currentConfig.name}`);
+
+      let text;
+      
+      // Xử lý theo provider
+      if (currentConfig.provider === 'gemini') {
+        // Khởi tạo Gemini AI
+        const genAI = new GoogleGenerativeAI(currentConfig.key);
+        const model = genAI.getGenerativeModel({ 
+          model: "gemini-2.0-flash-exp",
+          generationConfig: {
+            temperature: 0.7,
+            topP: 0.95,
+            topK: 40,
+            maxOutputTokens: 2048,
+          }
+        });
+
+        console.log(`  → Calling Gemini 2.0 Flash (prompt: ${String(prompt).length} chars)`);
+        const result = await model.generateContent(prompt);
+        const response = await result.response;
+        text = response.text();
+        
+      } else if (currentConfig.provider === 'deepseek') {
+        // Gọi DeepSeek API
+        console.log(`  → Calling DeepSeek API (prompt: ${String(prompt).length} chars)`);
+        
+        const response = await fetch('https://api.deepseek.com/v1/chat/completions', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${currentConfig.key}`
+          },
+          body: JSON.stringify({
+            model: 'deepseek-chat',
+            messages: [
+              {
+                role: 'user',
+                content: prompt
+              }
+            ],
+            temperature: 0.7,
+            max_tokens: 2048
+          })
+        });
+        
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(`DeepSeek API error: ${errorData.error?.message || response.statusText}`);
         }
-      });
+        
+        const data = await response.json();
+        text = data.choices[0]?.message?.content;
+        
+        if (!text) {
+          throw new Error('DeepSeek API returned empty response');
+        }
+      } else {
+        throw new Error(`Unknown provider: ${currentConfig.provider}`);
+      }
 
-      console.log(`🔄 Attempt ${attempt}/${maxRetries} - Calling Gemini 2.0 Flash with prompt length:`, String(prompt).length);
-
-      // Gọi API để tạo nội dung
-      const result = await model.generateContent(prompt);
-      const response = await result.response;
-      const text = response.text();
-
-      console.log('✅ Gemini 2.0 Flash response received successfully');
+      console.log(`✅ ${currentConfig.name} response received successfully`);
       
       // Reset error count khi thành công
-      resetKeyErrors(currentApiKey);
+      resetKeyErrors(currentConfig.key);
       
       return text;
 
@@ -62,7 +103,12 @@ async function callGeminiAPI(prompt) {
       console.error(`❌ Attempt ${attempt}/${maxRetries} failed:`, error.message);
       
       // Xử lý các loại lỗi cụ thể
-      if (error.message?.includes('API key') || error.message?.includes('API_KEY_INVALID')) {
+      if (error.message?.includes('API key') || error.message?.includes('API_KEY_INVALID') || error.message?.includes('Unauthorized')) {
+        console.error(`❌ ${currentConfig?.name || 'API'} authentication failed`);
+        // Thử key tiếp theo
+        if (attempt < maxRetries) {
+          continue;
+        }
         return 'Lỗi xác thực API key. Vui lòng kiểm tra cấu hình.';
       }
       if (error.message?.includes('blocked') || error.message?.includes('safety')) {
@@ -73,11 +119,12 @@ async function callGeminiAPI(prompt) {
       if (error.message?.includes('503') || 
           error.message?.includes('429') ||
           error.message?.includes('overloaded') ||
-          error.message?.includes('quota')) {
+          error.message?.includes('quota') ||
+          error.message?.includes('rate limit')) {
         
         // Đánh dấu key hiện tại bị lỗi
-        if (currentApiKey) {
-          markKeyError(currentApiKey, error);
+        if (currentConfig?.key) {
+          markKeyError(currentConfig.key, error);
         }
         
         if (attempt < maxRetries) {
