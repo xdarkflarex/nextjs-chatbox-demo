@@ -1,0 +1,10 @@
+{
+  "metadata": {
+    "file": "context_situations.json",
+    "description": "Tình huống tư vấn tâm lý học đường cho học sinh, giáo viên, phụ huynh",
+    "version": "2.0",
+    "last_updated": "2025-10-27",
+    "total_situations": 2895
+  },
+  "situations": "LOAD_FROM_rag_all.json"
+}

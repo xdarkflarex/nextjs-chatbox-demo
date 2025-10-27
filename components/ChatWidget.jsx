@@ -332,6 +332,12 @@ export default function ChatWidget() {
                 <span className="truncate">{q}</span>
               </button>
             ))}
+            <button onClick={handleEmergency} className="quick-question-btn flex items-center gap-1 text-xs px-2.5 sm:px-3 py-1 rounded-full border border-red-400 text-red-600 bg-white hover:bg-red-100 font-semibold transition shadow">
+              <span className="inline-block flex-shrink-0">
+                <svg className="h-3 w-3 sm:h-4 sm:w-4 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01" /></svg>
+              </span>
+              <span>Cần hỗ trợ khẩn</span>
+            </button>
           </>
         )}
       </div>

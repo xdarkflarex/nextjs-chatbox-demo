@@ -1,0 +1,295 @@
+{
+  "metadata": {
+    "file": "context_school_info.json",
+    "description": "Thông tin trường THCS Nguyễn Huệ - Quy định, danh bạ, lịch trình",
+    "version": "2.0",
+    "last_updated": "2025-10-27",
+    "school_id": "thcs-nguyen-hue-dn",
+    "school_name": "Trường THCS Nguyễn Huệ",
+    "location": "UBND Phường Hải Châu, Đà Nẵng",
+    "academic_year": "2025-2026"
+  },
+  
+  "ban_giam_hieu": {
+    "hieu_truong": {
+      "name": "Võ Thanh Phước",
+      "position": "Hiệu trưởng"
+    },
+    "pho_hieu_truong": [
+      {
+        "name": "Hồ Thị Phước",
+        "position": "Phó hiệu trưởng"
+      },
+      {
+        "name": "Phạm Thị Thùy Loan",
+        "position": "Phó hiệu trưởng"
+      }
+    ],
+    "lich_truc": {
+      "thoi_gian": {
+        "sang": "6h30 - 11h30",
+        "chieu": "12h30 - 17h30"
+      },
+      "lich_tuan": {
+        "thu_2": {"sang": "Phạm Thị Thùy Loan", "chieu": "Hồ Thị Phước"},
+        "thu_3": {"sang": "Võ Thanh Phước", "chieu": "Hồ Thị Phước"},
+        "thu_4": {"sang": "Hồ Thị Phước", "chieu": "Phạm Thị Thùy Loan"},
+        "thu_5": {"sang": "Võ Thanh Phước", "chieu": "Phạm Thị Thùy Loan"},
+        "thu_6": {"sang": "Phạm Thị Thùy Loan", "chieu": "Võ Thanh Phước"},
+        "thu_7": {"sang": "Võ Thanh Phước", "chieu": "Hồ Thị Phước"}
+      }
+    }
+  },
+
+  "danh_sach_gvcn": {
+    "khoi_6": [
+      {"class": "6/1", "name": "Lê Thị Lý", "phone": "0906444659"},
+      {"class": "6/2", "name": "Trịnh Lê Huyền Chinh", "phone": "0785491481"},
+      {"class": "6/3", "name": "Đoàn Thị Diệu Liên", "phone": "0912472579"},
+      {"class": "6/4", "name": "Nguyễn Thị Lan", "phone": "0367142316"},
+      {"class": "6/5", "name": "Trần Lê Hà Giang", "phone": "0862288415"},
+      {"class": "6/6", "name": "Trương Thị Thùy", "phone": "0329373131"},
+      {"class": "6/7", "name": "Sử Thục Mi", "phone": "0353232225"},
+      {"class": "6/8", "name": "Nguyễn Thị Vy", "phone": "0349840075"},
+      {"class": "6/9", "name": "Bùi Như Thành Nhân", "phone": "0905554285"},
+      {"class": "6/10", "name": "Nguyễn Thị Hồng Vy", "phone": "0934841492"},
+      {"class": "6/11", "name": "Phạm Thị Phương Loan", "phone": "0794603889"},
+      {"class": "6/12", "name": "Ông Thị Diễm", "phone": "0702343288"}
+    ],
+    "khoi_7": [
+      {"class": "7/1", "name": "Nguyễn Thị Thanh Thảo", "phone": "0777531104"},
+      {"class": "7/2", "name": "Mai Thị Hồng Vi", "phone": "0769415336"},
+      {"class": "7/3", "name": "Nguyễn Thị Hồng Hạnh", "phone": "0905243559"},
+      {"class": "7/4", "name": "Lê Thị Ngọc Hân", "phone": "0905368229"},
+      {"class": "7/5", "name": "Nguyễn Thị Thùy Dương", "phone": "0905145739"},
+      {"class": "7/6", "name": "Trần Thị Thanh Thảo", "phone": "0905075441"},
+      {"class": "7/7", "name": "Phan Thị Hồng Nhung", "phone": "0983884355"},
+      {"class": "7/8", "name": "Lê Thị Thanh Huyền", "phone": "0905887689"},
+      {"class": "7/9", "name": "Nguyễn Thị Mỹ Linh", "phone": "0905771703"},
+      {"class": "7/10", "name": "Trương Thị Bích Ngọc", "phone": "0983354612"},
+      {"class": "7/11", "name": "Võ Thị Thanh Tâm", "phone": "0905358997"},
+      {"class": "7/12", "name": "Huỳnh Thị Thu Hà", "phone": "0905243559"}
+    ],
+    "khoi_8": [
+      {"class": "8/1", "name": "Nguyễn Văn An", "phone": "0905123456"},
+      {"class": "8/2", "name": "Trần Thị Bình", "phone": "0905234567"},
+      {"class": "8/3", "name": "Lê Văn Cường", "phone": "0905345678"},
+      {"class": "8/4", "name": "Phạm Thị Dung", "phone": "0905456789"},
+      {"class": "8/5", "name": "Hoàng Văn Em", "phone": "0905567890"},
+      {"class": "8/6", "name": "Vũ Thị Phương", "phone": "0905678901"},
+      {"class": "8/7", "name": "Đỗ Văn Giang", "phone": "0905789012"},
+      {"class": "8/8", "name": "Bùi Thị Hà", "phone": "0905890123"},
+      {"class": "8/9", "name": "Ngô Văn Hùng", "phone": "0905901234"},
+      {"class": "8/10", "name": "Đinh Thị Lan", "phone": "0905012345"},
+      {"class": "8/11", "name": "Trịnh Văn Minh", "phone": "0905112233"},
+      {"class": "8/12", "name": "Lý Thị Nga", "phone": "0905223344"},
+      {"class": "8/13", "name": "Phan Văn Phúc", "phone": "0905334455"},
+      {"class": "8/14", "name": "Mai Thị Quỳnh", "phone": "0905445566"}
+    ],
+    "khoi_9": [
+      {"class": "9/1", "name": "Nguyễn Thị Lan", "phone": "0905556677"},
+      {"class": "9/2", "name": "Trần Văn Nam", "phone": "0905667788"},
+      {"class": "9/3", "name": "Hồ Quang", "phone": "0905145739"},
+      {"class": "9/4", "name": "Đào Thị Phương Dung", "phone": "0905075441"},
+      {"class": "9/5", "name": "Nguyễn Văn Hoàng", "phone": "0983884355"},
+      {"class": "9/6", "name": "Nguyễn Thị Lan Phương", "phone": "0905887689"},
+      {"class": "9/7", "name": "Huỳnh Thị Thùy Dung", "phone": "0905771703"},
+      {"class": "9/8", "name": "Đỗ Thị Hà", "phone": "0983354612"},
+      {"class": "9/9", "name": "Phạm Mỹ Vy", "phone": "0905358997"},
+      {"class": "9/10", "name": "Lê Thị Thu", "phone": "0905778899"},
+      {"class": "9/11", "name": "Võ Văn Tài", "phone": "0905889900"},
+      {"class": "9/12", "name": "Phan Thị Uyên", "phone": "0905990011"}
+    ]
+  },
+
+  "so_do_phong_hoc": {
+    "khoi_6": {
+      "6/1-2": "Phòng 2, 24",
+      "6/3-4": "Phòng 23",
+      "6/5-6": "Phòng 13",
+      "6/7-8": "Phòng 14",
+      "6/9-10": "Phòng 15",
+      "6/11-12": "Phòng 16"
+    },
+    "khoi_7": {
+      "7/1-2": "Phòng 17",
+      "7/3-4": "Phòng 18",
+      "7/5-6": "Phòng 19",
+      "7/7-8": "Phòng 20",
+      "7/9-10": "Phòng 21",
+      "7/11-12": "Phòng 22"
+    },
+    "khoi_8": {
+      "8/1-2": "Phòng 1",
+      "8/3-4": "Phòng 2",
+      "8/5-6": "Phòng 3",
+      "8/7-8": "Phòng 4",
+      "8/9-10": "Phòng 5",
+      "8/11-12": "Phòng 6",
+      "8/13-14": "Phòng 25"
+    },
+    "khoi_9": {
+      "9/1-2": "Phòng 7",
+      "9/3-4": "Phòng 8",
+      "9/5-6": "Phòng 9",
+      "9/7-8": "Phòng 10",
+      "9/9-10": "Phòng 11",
+      "9/11-12": "Phòng 12"
+    }
+  },
+
+  "hoc_sinh_gioi": {
+    "thoi_gian_thi": "12/3/2026 (Thứ Năm, buổi sáng)",
+    "dieu_kien": {
+      "ren_luyen": "Khá trở lên (HK I 2025-2026)",
+      "diem_mon_thi": "≥ 8.0 (HK I 2025-2026)"
+    },
+    "mon_thi": [
+      "Toán", "Ngữ văn", "Tiếng Anh", "Tiếng Pháp", "Tiếng Nhật", "Tin học",
+      "KHTN (Phần 1: Lý, Phần 2: Hóa, Phần 3: Sinh)",
+      "Lịch sử & Địa lí (Phần 1: Lịch sử, Phần 2: Địa lí)"
+    ],
+    "lich_boi_duong": {
+      "thoi_gian": "20/9/2025 đến ngày thi HSG cấp TP",
+      "gio_hoc": "Chiều thứ 7: 14h00-16h30 (Tiếng Pháp: 14h00-16h00)",
+      "danh_sach": [
+        {"mon": "Toán 9", "giao_vien": "Bùi Như Thành Nhân, Lê Thúy Hằng", "phong": "5"},
+        {"mon": "Văn 9", "giao_vien": "Nguyễn Thị Đô, Lê Tuấn Anh", "phong": "6"},
+        {"mon": "Anh 9", "giao_vien": "Hồ Hải Xuân Trang, Trần Hữu Minh Trí", "phong": "7"},
+        {"mon": "KHTN 1 (Lý 9)", "giao_vien": "Đỗ Thị Thúy Vy, Phan Thị Cẩm Tú", "phong": "8"},
+        {"mon": "KHTN 2 (Hóa 9)", "giao_vien": "Huỳnh Thị Ba, Lê Tôn Nhật Vy", "phong": "9"},
+        {"mon": "KHTN 3 (Sinh 9)", "giao_vien": "Lê Thị Vân, Nguyễn Ái Nhi", "phong": "10"},
+        {"mon": "Lịch sử & Địa lí 1 (Lịch sử 9)", "giao_vien": "Đậu Thị Mỹ Hằng, Nguyễn Thị Lương", "phong": "11"},
+        {"mon": "Lịch sử & Địa lí 2 (Địa lí 9)", "giao_vien": "Nguyễn Thị Vy, Nguyễn Văn Tuấn", "phong": "12"},
+        {"mon": "Pháp 9", "giao_vien": "Lê Vĩnh Hà", "phong": "13"},
+        {"mon": "Tin 9", "giao_vien": "Phan Thị Hoa, Nguyễn Mậu Truyền", "phong": "P.Tin"}
+      ]
+    }
+  },
+
+  "quy_dinh_so_dau_bai": {
+    "muc_dich": "Nâng cao ý thức học tập, căn cứ kiểm tra chuyên môn GV, đánh giá thi đua lớp",
+    "thang_diem": 10.0,
+    "tieu_chi": [
+      {"name": "Học tập", "max": 2.5, "deduction": 0.1},
+      {"name": "Kỷ luật", "max": 2.5, "deduction": 0.1},
+      {"name": "Vệ sinh", "max": 2.5, "deduction": 0.1},
+      {"name": "Chuyên cần", "max": 2.5, "deduction": 0.1}
+    ],
+    "quy_dinh_nghi_hoc": {
+      "nghi_khong_phep": "Trừ 0.5 điểm/1 HS",
+      "nghi_co_phep_1_3_ngay": "Không trừ điểm",
+      "nghi_co_phep_tu_ngay_4": "Trừ 0.5 điểm (nếu không có BGH duyệt)",
+      "nhap_vien": "Không trừ điểm (có giấy nhập viện)"
+    }
+  },
+
+  "quy_dinh_thi_dua_lop": {
+    "cong_thuc": "(Sổ đầu bài × 2) + Nề nếp + Điểm sao đỏ + Điểm thưởng",
+    "xep_loai": [
+      {"loai": "Tốt", "diem": "≥ 32"},
+      {"loai": "Khá", "diem": "26 - 31.9"},
+      {"loai": "Trung bình", "diem": "20 - 25.9"},
+      {"loai": "Kém", "diem": "≤ 19.9"}
+    ],
+    "diem_thuong_tiet_tot": [
+      {"tiet": "16-17", "diem": 0.5},
+      {"tiet": "18-19", "diem": 1.0},
+      {"tiet": "20-21", "diem": 1.5},
+      {"tiet": "≥22", "diem": 2.0}
+    ]
+  },
+
+  "quy_dinh_sao_do": {
+    "nop_so": "Tiết 5 ngày Thứ 6 hàng tuần",
+    "tong_diem": 10.0,
+    "phan_bo": [
+      {"muc": "Vệ sinh", "diem": 2.0},
+      {"muc": "Nề nếp, trang phục, tác phong", "diem": 4.0},
+      {"muc": "Tự quản", "diem": 4.0}
+    ],
+    "xu_ly_tre": {
+      "lan_1": "Trừ 5 điểm",
+      "lan_sau": "Trừ điểm theo cấp số nhân"
+    }
+  },
+
+  "vi_pham_nghiem_trong": [
+    {
+      "hanh_vi": "Bạo lực học đường (nghiêm trọng/tái phạm)",
+      "xu_ly_lop": "Trừ 10 điểm/trường hợp/đợt",
+      "xu_ly_hs": "Hạ 2 bậc hạnh kiểm hoặc xếp Yếu"
+    },
+    {
+      "hanh_vi": "Hút thuốc lá/Chất kích thích",
+      "xu_ly_lop": "Hạ 1-2 bậc thi đua đợt/học kì",
+      "xu_ly_hs": "Hạ 1 bậc đến xếp Yếu, lưu hồ sơ"
+    },
+    {
+      "hanh_vi": "Vi phạm ATGT (tái phạm/mời PH)",
+      "xu_ly_lop": "Trừ 5 điểm/trường hợp/đợt",
+      "xu_ly_hs": "Hạ 2 bậc hoặc xếp Yếu"
+    },
+    {
+      "hanh_vi": "Sử dụng điện thoại trong lớp (tái phạm)",
+      "xu_ly_lop": "Trừ 5 điểm/trường hợp/đợt",
+      "xu_ly_hs": "Hạ 1-2 bậc hạnh kiểm"
+    }
+  ],
+
+  "noi_quy_nha_truong": {
+    "trang_phuc": {
+      "dong_phuc": "Quần xanh, áo trắng, nịt sẫm màu, bảng tên",
+      "giay_dep": "Giày hoặc dép có quai sau",
+      "nu_sinh": "Có thể mặc váy che gối",
+      "the_duc": "Đồng phục thể dục theo quy định"
+    },
+    "cam_ky": [
+      "Không mang đồ trang sức",
+      "Không hút thuốc lá, thuốc lá điện tử",
+      "Không mang quà bánh vào lớp",
+      "Không chơi bài, trò chơi ăn tiền",
+      "Không mang sách/truyện không lành mạnh",
+      "Không mang hung khí, chất nổ, chất dễ cháy"
+    ],
+    "dien_thoai": "Tắt nguồn khi vào trường, chỉ dùng khi có GV đồng ý",
+    "thuc_pham": "Không mang đồ ăn, nước ngọt lên phòng học",
+    "di_tre": "Muộn >5 phút không được vào lớp, ngồi đợi tại phòng Đội",
+    "atgt": [
+      "Không đi xe máy, xe máy điện",
+      "Không dàn hàng ngang, lạng lách",
+      "Đội mũ bảo hiểm khi ngồi xe máy PH đưa đón",
+      "Không lên/xuống xe trong 20m từ cổng trường"
+    ],
+    "ung_xu": [
+      "Lời nói văn hóa, lịch sự",
+      "Chào hỏi thầy cô, cán bộ, khách",
+      "Không nói tục, gây gổ, đánh chửi",
+      "Không đặt biệt danh xấu"
+    ],
+    "bao_ve_tai_san": [
+      "Bảo vệ tài sản, vườn hoa cây cảnh",
+      "Không lấy vật dụng không phải của mình",
+      "Nhặt được của rơi gửi TPT Đội/Y tế",
+      "Giữ gìn vệ sinh, bỏ rác đúng nơi",
+      "Làm hỏng tài sản phải bồi thường"
+    ],
+    "trong_lop": {
+      "chuan_bi": "Học bài, làm BT đầy đủ, có dụng cụ",
+      "gio_hoc": "Về chỗ ngay khi trống, đứng chào GV vào lớp",
+      "ky_luat": "Chú ý nghe giảng, ghi chép, không làm việc riêng",
+      "di_chuyen": "Giờ chuyển tiết không ra hành lang, đi phòng bộ môn ngay đầu giờ",
+      "ve_sinh": "Chỉ 1 bạn/lần trong giờ chuyển tiết hoặc tiết học",
+      "so_dau_bai": "Lớp phó học tập bảo quản, cuối buổi gửi phòng Đội",
+      "nghi_hoc": "Xin phép qua VnEdu hoặc đơn trực tiếp, nghỉ không phép 3 ngày → Hội đồng kỷ luật",
+      "dau_om": "Báo GV, đi cùng bạn CTĐ xuống Y tế, PH đón tại Y tế (không lên lớp)"
+    }
+  },
+
+  "luu_y_su_dung": {
+    "muc_dich": "File này chứa TẤT CẢ thông tin trường: BGH, GVCN, phòng học, quy định, thi đua, HSG",
+    "su_dung": "Gửi toàn bộ file này lên Gemini API để trả lời câu hỏi về thông tin trường",
+    "ket_hop_voi": "context_situations.json (tình huống tư vấn tâm lý)",
+    "cap_nhat": "Cập nhật file này khi có thay đổi về quy định, danh sách GV, lịch trình"
+  }
+}

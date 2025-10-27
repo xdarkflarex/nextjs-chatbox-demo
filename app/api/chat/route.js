@@ -4,6 +4,16 @@ import Fuse from "fuse.js";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { getNextApiKey, markKeyError, resetKeyErrors } from "../../../lib/gemini-rotator.js";
 
+// Load thông tin trường từ context_school_info.json
+let schoolInfo = null;
+try {
+  const schoolInfoPath = path.join(process.cwd(), 'app', 'public', 'data', 'context_school_info.json');
+  schoolInfo = JSON.parse(fs.readFileSync(schoolInfoPath, 'utf8'));
+  console.log('✅ Loaded context_school_info.json');
+} catch (error) {
+  console.error('❌ Failed to load context_school_info.json:', error.message);
+}
+
 async function callGeminiAPI(prompt) {
   const maxRetries = 3;
   let lastError = null;
@@ -221,6 +231,93 @@ function searchRAG(userQuery, ragData) {
   };
 }
 
+/**
+ * Build context từ school_info.json
+ */
+function buildSchoolInfoContext(userQuery) {
+  if (!schoolInfo) {
+    console.log('⚠️ schoolInfo is null - file not loaded');
+    return '';
+  }
+  
+  let context = '';
+  const query = userQuery.toLowerCase();
+  console.log('🔍 Building school context for query:', query);
+  
+  // 1. BGH - Hiệu trưởng, Phó HT, Lịch trực
+  const isBGHQuery = query.includes('hiệu trưởng') || 
+                     query.includes('hiệu phó') || 
+                     query.includes('phó hiệu') ||
+                     query.includes('bgh') || 
+                     query.includes('ban giám hiệu') || 
+                     query.includes('giám hiệu') ||
+                     query.includes('trực');
+  
+  if (isBGHQuery) {
+    console.log('✅ Detected BGH query - adding BGH context');
+    context += '=== BAN GIÁM HIỆU ===\n';
+    context += `- Hiệu trưởng: ${schoolInfo.ban_giam_hieu.hieu_truong.name}\n`;
+    context += `- Phó Hiệu trưởng: ${schoolInfo.ban_giam_hieu.pho_hieu_truong.map(p => p.name).join(', ')}\n`;
+    
+    if (query.includes('trực')) {
+      context += `\n**Lịch trực:**\n`;
+      context += `- Thời gian: Sáng ${schoolInfo.ban_giam_hieu.lich_truc.thoi_gian.sang}, Chiều ${schoolInfo.ban_giam_hieu.lich_truc.thoi_gian.chieu}\n`;
+      
+      // Tìm ngày cụ thể
+      const days = ['thứ 2', 'thứ 3', 'thứ 4', 'thứ 5', 'thứ 6', 'thứ 7'];
+      const foundDay = days.find(d => query.includes(d));
+      if (foundDay) {
+        const dayKey = foundDay.replace(' ', '_');
+        const schedule = schoolInfo.ban_giam_hieu.lich_truc.lich_tuan[dayKey];
+        if (schedule) {
+          context += `- ${foundDay}: Sáng ${schedule.sang}, Chiều ${schedule.chieu}\n`;
+        }
+      }
+    }
+    context += '\n';
+  }
+  
+  // 2. GVCN
+  if (query.includes('gvcn') || query.includes('chủ nhiệm') || /lớp \d\/\d+/.test(query)) {
+    const classMatch = query.match(/(\d)\/(\d+)/);
+    if (classMatch) {
+      const grade = classMatch[1];
+      const className = `${classMatch[1]}/${classMatch[2]}`;
+      const gvcnList = schoolInfo.danh_sach_gvcn[`khoi_${grade}`];
+      const gvcn = gvcnList?.find(g => g.class === className);
+      
+      if (gvcn) {
+        context += '=== GIÁO VIÊN CHỦ NHIỆM ===\n';
+        context += `- Lớp ${className}: ${gvcn.name} - ${gvcn.phone}\n\n`;
+      }
+    }
+  }
+  
+  // 3. Quy định sổ đầu bài
+  if (query.includes('sổ đầu bài') || query.includes('chấm điểm')) {
+    context += '=== QUY ĐỊNH SỔ ĐẦU BÀI ===\n';
+    context += `- Thang điểm: ${schoolInfo.quy_dinh_so_dau_bai.thang_diem}\n`;
+    context += `- Tiêu chí:\n`;
+    schoolInfo.quy_dinh_so_dau_bai.tieu_chi.forEach(tc => {
+      context += `  + ${tc.name}: ${tc.max} điểm\n`;
+    });
+    context += '\n';
+  }
+  
+  // 4. Quy định thi đua
+  if (query.includes('thi đua') || query.includes('xếp loại')) {
+    context += '=== QUY ĐỊNH THI ĐUA LỚP ===\n';
+    context += `- Công thức: ${schoolInfo.quy_dinh_thi_dua_lop.cong_thuc}\n`;
+    context += `- Xếp loại:\n`;
+    schoolInfo.quy_dinh_thi_dua_lop.xep_loai.forEach(xl => {
+      context += `  + ${xl.loai}: ${xl.diem} điểm\n`;
+    });
+    context += '\n';
+  }
+  
+  return context;
+}
+
 // Hàm xây dựng context từ Smart Retrieval (TỐI ƯU - GIẢM TOKEN)
 function buildSmartContext(smartResults, userQuery) {
   if (!smartResults.results || smartResults.results.length === 0) {
@@ -399,16 +496,23 @@ export async function POST(request) {
   // ========== BƯỚC 3: KẾT HỢP CONTEXT ==========
   let context = '';
   
-  // Ưu tiên smart retrieval nếu có kết quả tốt
+  // 1. Thêm context từ school_info.json (BGH, GVCN, quy định)
+  const schoolContext = buildSchoolInfoContext(last);
+  if (schoolContext) {
+    context = schoolContext + '\n';
+    console.log('📚 Using school_info context:', schoolContext.substring(0, 100) + '...');
+  }
+  
+  // 2. Ưu tiên smart retrieval nếu có kết quả tốt
   if (smartResults && smartResults.results?.length > 0) {
     const smartContext = buildSmartContext(smartResults, last);
     if (smartContext && smartContext.length > 50) {
-      context = smartContext + '\n\n';
+      context += smartContext + '\n';
       console.log('📌 Using smart context:', smartContext.substring(0, 100) + '...');
     }
   }
   
-  // Bổ sung context từ RAG cũ
+  // 3. Bổ sung context từ RAG cũ (tình huống tư vấn)
   const ragContext = buildAIContext(searchResults, last);
   context += ragContext;
   

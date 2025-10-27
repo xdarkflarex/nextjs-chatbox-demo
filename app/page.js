@@ -253,9 +253,11 @@ export default function Page() {
                 Lưu ý quan trọng
               </h3>
               <p className="text-xs text-gray-600 leading-relaxed">
-                Nếu bạn cần hỗ trợ, vui lòng liên hệ trực tiếp với 
-                <strong className="text-blue-600"> cán bộ tư vấn trường</strong> hoặc 
-                <strong className="text-blue-600"> giáo viên chủ nhiệm</strong> của lớp.
+                Nếu bạn cần hỗ trợ, vui lòng nhấn nút 
+                <strong className="text-red-600">"Cần hỗ trợ khẩn"</strong> trong khung chat 
+                hoặc liên hệ trực tiếp với 
+                <strong className="text-blue-600">cán bộ tư vấn trường</strong> hoặc 
+                <strong className="text-blue-600">GVCN</strong> của lớp.
               </p>
             </div>
 
