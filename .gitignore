@@ -3,4 +3,17 @@ node_modules
 out
 dist
 .env
+.env.local
 .DS_Store
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Excel files (nếu không cần push)
+*.xlsx

@@ -1,11 +1,118 @@
 "use client";
+import { useState, useEffect } from "react";
 import ChatWidget from "../components/ChatWidget";
 import Link from "next/link";
 import Image from "next/image";
 
 export default function Page() {
+  const [showWelcome, setShowWelcome] = useState(false);
+
+  useEffect(() => {
+    // Kiểm tra xem đã xem popup chưa
+    const hasSeenWelcome = localStorage.getItem('hasSeenWelcome');
+    if (!hasSeenWelcome) {
+      setShowWelcome(true);
+    }
+  }, []);
+
+  const handleCloseWelcome = () => {
+    localStorage.setItem('hasSeenWelcome', 'true');
+    setShowWelcome(false);
+  };
+
   return (
-    <main className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-100 p-4 md:p-6 lg:p-8">
+    <>
+      {/* Welcome Popup */}
+      {showWelcome && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fadeIn">
+          <div className="bg-white rounded-3xl shadow-2xl max-w-lg w-full p-8 relative animate-slideUp">
+            {/* Close button */}
+            <button
+              onClick={handleCloseWelcome}
+              className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors"
+            >
+              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+
+            {/* Icon */}
+            <div className="flex justify-center mb-6">
+              <div className="bg-gradient-to-br from-blue-500 to-purple-600 p-4 rounded-full">
+                <svg className="w-12 h-12 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+            </div>
+
+            {/* Title */}
+            <h2 className="text-2xl font-bold text-center text-gray-800 mb-4">
+              Chào mừng đến với Trợ lý AI! 🤖
+            </h2>
+
+            {/* Content */}
+            <div className="space-y-4 text-gray-600">
+              <div className="flex items-start gap-3">
+                <div className="flex-shrink-0 w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center mt-0.5">
+                  <span className="text-blue-600 text-sm font-bold">1</span>
+                </div>
+                <p className="text-sm">
+                  <strong className="text-gray-800">Chọn vai trò</strong> của bạn (Học sinh, Giáo viên, hoặc Phụ huynh)
+                </p>
+              </div>
+
+              <div className="flex items-start gap-3">
+                <div className="flex-shrink-0 w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center mt-0.5">
+                  <span className="text-blue-600 text-sm font-bold">2</span>
+                </div>
+                <p className="text-sm">
+                  <strong className="text-gray-800">Nhập lớp</strong> của bạn để được hỗ trợ tốt hơn
+                </p>
+              </div>
+
+              <div className="flex items-start gap-3">
+                <div className="flex-shrink-0 w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center mt-0.5">
+                  <span className="text-blue-600 text-sm font-bold">3</span>
+                </div>
+                <p className="text-sm">
+                  <strong className="text-gray-800">Bắt đầu trò chuyện</strong> với trợ lý AI
+                </p>
+              </div>
+
+              {/* Important note */}
+              <div className="mt-6 p-4 bg-amber-50 border-2 border-amber-200 rounded-xl">
+                <div className="flex items-start gap-2">
+                  <svg className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                  </svg>
+                  <div>
+                    <p className="text-sm font-bold text-amber-800 mb-1">Lưu ý quan trọng:</p>
+                    <p className="text-xs text-amber-700">
+                      Để đạt hiệu quả chatbot cao nhất, <strong>mỗi phiên chat nên chỉ tập trung vào 1 nội dung cụ thể</strong>. Nếu bạn có nhiều vấn đề khác nhau, hãy tạo phiên chat mới cho mỗi vấn đề.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Button */}
+            <button
+              onClick={handleCloseWelcome}
+              className="mt-6 w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all transform hover:scale-105"
+            >
+              Đã hiểu, bắt đầu ngay!
+            </button>
+          </div>
+        </div>
+      )}
+
+      <main className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-100 p-4 md:p-6 lg:p-8 relative overflow-hidden">
+        {/* Animated Background */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-0 left-0 w-96 h-96 bg-blue-200 rounded-full opacity-20 blur-3xl animate-float"></div>
+          <div className="absolute top-1/4 right-0 w-80 h-80 bg-purple-200 rounded-full opacity-20 blur-3xl animate-float-delayed"></div>
+          <div className="absolute bottom-0 left-1/3 w-72 h-72 bg-pink-200 rounded-full opacity-20 blur-3xl animate-float-slow"></div>
+        </div>
       <div className="max-w-7xl mx-auto">
         {/* Layout 2 cột: Trái (Info) + Phải (Chat) */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 lg:items-start">
@@ -59,10 +166,34 @@ export default function Page() {
                 <div className="bg-white/10 rounded-lg p-3 backdrop-blur-sm">
                   <p className="font-semibold mb-2">✨ Tôi có thể giúp bạn:</p>
                   <ul className="space-y-1 text-xs">
-                    <li>• Tư vấn học tập & kỹ năng</li>
-                    <li>• Hỗ trợ tâm lý học đường</li>
-                    <li>• Tra cứu quy định nhà trường</li>
-                    <li>• Giải đáp thắc mắc nhanh chóng</li>
+                    <li className="flex items-start gap-1">
+                      <span>•</span>
+                      <span>
+                        <strong className="text-green-300">Hỗ trợ tâm lý học đường</strong>
+                        <span className="text-green-200 text-[10px] ml-1">(Đã hoàn thiện, đang chạy thử)</span>
+                      </span>
+                    </li>
+                    <li className="flex items-start gap-1 opacity-60">
+                      <span>•</span>
+                      <span>
+                        Tư vấn học tập & kỹ năng
+                        <span className="text-yellow-200 text-[10px] ml-1">(Đang phát triển)</span>
+                      </span>
+                    </li>
+                    <li className="flex items-start gap-1 opacity-60">
+                      <span>•</span>
+                      <span>
+                        Tra cứu quy định nhà trường
+                        <span className="text-yellow-200 text-[10px] ml-1">(Đang phát triển)</span>
+                      </span>
+                    </li>
+                    <li className="flex items-start gap-1 opacity-60">
+                      <span>•</span>
+                      <span>
+                        Giải đáp thắc mắc nhanh chóng
+                        <span className="text-yellow-200 text-[10px] ml-1">(Đang phát triển)</span>
+                      </span>
+                    </li>
                   </ul>
                 </div>
 
@@ -122,5 +253,6 @@ export default function Page() {
         </div>
       </div>
     </main>
+    </>
   );
 }

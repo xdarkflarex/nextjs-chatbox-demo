@@ -21,29 +21,69 @@ export default function AdminDashboard() {
   const [processing, setProcessing] = useState(-1);
   const [deleted, setDeleted] = useState(-1);
   const [summarizing, setSummarizing] = useState(false);
+  const [regenerating, setRegenerating] = useState(false);
+  const [stats, setStats] = useState(null);
 
   useEffect(() => {
     if (typeof window !== "undefined" && !localStorage.getItem("admin")) {
       router.push("/admin-login");
       return;
     }
-    // Đọc dữ liệu từ localStorage
-    let sessions = [];
-    try {
-      sessions = JSON.parse(localStorage.getItem("chatSessions")) || [];
-    } catch {}
-    // Thêm trường thời gian nếu chưa có
-    sessions = sessions.map((s) => ({
-      ...s,
-      time: s.time || Date.now(),
-      id: s.sessionId || s.id || Math.random().toString(36).slice(2),
-    }));
-    setSessions(sessions);
-    setLoading(false);
     
-    // Tự động tóm tắt các phiên chat chưa có summary
-    summarizeSessions(sessions);
+    // Đọc dữ liệu từ Supabase API
+    fetchSessions();
+    fetchStats();
   }, [router]);
+
+  async function fetchSessions() {
+    try {
+      setLoading(true);
+      const response = await fetch('/api/sessions');
+      const data = await response.json();
+      
+      if (data.ok && data.sessions) {
+        // Chuyển đổi format từ Supabase sang format admin cần
+        const formattedSessions = data.sessions.map(s => ({
+          id: s.id,
+          sessionId: s.id,
+          time: s.created_at,
+          role: s.user_role,
+          userRole: s.user_role, // Thêm userRole để consistent
+          userClass: s.user_class,
+          emergencyLevel: s.emergency_level,
+          isEmergency: s.is_emergency,
+          emergencyKeywords: s.emergency_keywords,
+          totalMessages: s.total_messages,
+          summary: s.session_name,
+          messages: [], // Sẽ load khi click vào session
+          processed: false
+        }));
+        
+        setSessions(formattedSessions);
+        
+        // Tự động tóm tắt các phiên chat chưa có summary
+        // summarizeSessions(formattedSessions);
+      }
+    } catch (error) {
+      console.error('Error fetching sessions:', error);
+      setSessions([]);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function fetchStats() {
+    try {
+      const response = await fetch('/api/stats');
+      const data = await response.json();
+      
+      if (data.ok) {
+        setStats(data.stats);
+      }
+    } catch (error) {
+      console.error('Error fetching stats:', error);
+    }
+  }
 
   async function summarizeSessions(sessions) {
     // Lọc các phiên chưa có summary
@@ -73,21 +113,68 @@ export default function AdminDashboard() {
       }
     }
     
-    // Lưu lại vào localStorage
-    localStorage.setItem('chatSessions', JSON.stringify(sessions));
     setSessions([...sessions]);
     setSummarizing(false);
   }
 
+  async function handleRegenerateSummaries() {
+    if (!confirm('Tạo lại tóm tắt cho tất cả phiên chat? Có thể mất vài giây.')) {
+      return;
+    }
+    
+    setRegenerating(true);
+    
+    try {
+      const response = await fetch('/api/sessions/regenerate-summaries', {
+        method: 'POST'
+      });
+      
+      const data = await response.json();
+      
+      if (data.ok) {
+        alert(`✅ Đã cập nhật ${data.updated} phiên chat!\n⏭️ Bỏ qua: ${data.skipped}\n❌ Lỗi: ${data.failed}`);
+        // Reload sessions
+        fetchSessions();
+      } else {
+        alert('❌ Lỗi: ' + data.error);
+      }
+    } catch (error) {
+      console.error('Error regenerating summaries:', error);
+      alert('❌ Lỗi: ' + error.message);
+    } finally {
+      setRegenerating(false);
+    }
+  }
+
   async function handleDelete(id) {
     setDeleted(id);
-    setTimeout(() => {
-      const updated = sessions.filter((s) => s.id !== id);
-      setSessions(updated);
-      localStorage.setItem("chatSessions", JSON.stringify(updated));
+    
+    try {
+      // Xóa từ Supabase ngay lập tức (Real-time)
+      const response = await fetch('/api/sessions', {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id })
+      });
+      
+      const data = await response.json();
+      
+      if (data.ok) {
+        // Cập nhật UI
+        setTimeout(() => {
+          const updated = sessions.filter((s) => s.id !== id);
+          setSessions(updated);
+          setDeleted(-1);
+          setSelected(0);
+        }, 400);
+      } else {
+        console.error('Error deleting session:', data.error);
+        setDeleted(-1);
+      }
+    } catch (error) {
+      console.error('Error deleting session:', error);
       setDeleted(-1);
-      setSelected(0);
-    }, 400);
+    }
   }
 
   async function handleProcess(id) {
@@ -98,20 +185,116 @@ export default function AdminDashboard() {
         s.id === id ? { ...s, processed: true } : s
       );
       setSessions(updated);
-      localStorage.setItem("chatSessions", JSON.stringify(updated));
       setProcessing(-1);
     }, 600);
   }
 
-  if (loading) return <div className="p-8">Đang tải dữ liệu…</div>;
-  
-  if (summarizing && sessions.length > 0) {
+  async function loadSessionMessages(sessionId, index) {
+    // Set selected trước để UI responsive
+    setSelected(index);
+    
+    // Nếu session đã có messages, không cần load lại
+    const session = sessions[index];
+    if (session.messages && session.messages.length > 0) {
+      return;
+    }
+    
+    try {
+      // Load messages từ Supabase
+      const response = await fetch(`/api/sessions/${sessionId}`);
+      const data = await response.json();
+      
+      if (data.ok && data.session) {
+        // Cập nhật session với messages
+        const updated = [...sessions];
+        updated[index] = {
+          ...updated[index],
+          messages: data.session.messages || []
+        };
+        setSessions(updated);
+      }
+    } catch (error) {
+      console.error('Error loading messages:', error);
+    }
+  }
+
+  if (loading) {
     return (
-      <div className="p-8 max-w-6xl mx-auto bg-gradient-to-br from-blue-50 to-blue-100 min-h-screen rounded-xl shadow-xl flex items-center justify-center">
-        <div className="bg-white rounded-xl shadow-lg p-8 text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-blue-700 font-semibold">Đang tóm tắt nội dung các phiên chat...</p>
-          <p className="text-sm text-gray-500 mt-2">Vui lòng đợi trong giây lát</p>
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 flex items-center justify-center p-4 relative overflow-hidden">
+        {/* Animated Background */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-0 left-0 w-96 h-96 bg-blue-200 rounded-full opacity-20 blur-3xl animate-float"></div>
+          <div className="absolute bottom-0 right-0 w-80 h-80 bg-purple-200 rounded-full opacity-20 blur-3xl animate-float-delayed"></div>
+        </div>
+
+        <div className="relative bg-white rounded-3xl shadow-2xl p-12 text-center max-w-md w-full border-2 border-blue-200 animate-slideUp">
+          {/* Animated logo */}
+          <div className="relative w-24 h-24 mx-auto mb-6">
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full animate-pulse"></div>
+            <div className="absolute inset-2 bg-white rounded-full flex items-center justify-center">
+              <svg className="w-12 h-12 text-blue-600 animate-spin" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+            </div>
+          </div>
+          
+          {/* Loading text */}
+          <h2 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">
+            Đang tải dữ liệu
+          </h2>
+          <p className="text-gray-500 mb-6">Đang kết nối với cơ sở dữ liệu...</p>
+          
+          {/* Progress bar */}
+          <div className="w-full bg-gray-200 rounded-full h-2 mb-4 overflow-hidden">
+            <div className="h-full bg-gradient-to-r from-blue-500 to-purple-500 rounded-full animate-pulse" style={{width: '60%'}}></div>
+          </div>
+          
+          {/* Progress dots */}
+          <div className="flex justify-center gap-2">
+            <div className="w-3 h-3 bg-blue-500 rounded-full animate-bounce" style={{animationDelay: '0ms'}}></div>
+            <div className="w-3 h-3 bg-purple-500 rounded-full animate-bounce" style={{animationDelay: '150ms'}}></div>
+            <div className="w-3 h-3 bg-pink-500 rounded-full animate-bounce" style={{animationDelay: '300ms'}}></div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (summarizing) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 flex items-center justify-center p-4 relative overflow-hidden">
+        {/* Animated Background */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-purple-200 rounded-full opacity-20 blur-3xl animate-float"></div>
+          <div className="absolute bottom-0 left-0 w-80 h-80 bg-pink-200 rounded-full opacity-20 blur-3xl animate-float-delayed"></div>
+        </div>
+
+        <div className="relative bg-white rounded-3xl shadow-2xl p-12 text-center max-w-md w-full border-2 border-purple-200 animate-slideUp">
+          <div className="relative w-24 h-24 mx-auto mb-6">
+            <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full animate-pulse"></div>
+            <div className="absolute inset-2 bg-white rounded-full flex items-center justify-center">
+              <svg className="w-12 h-12 text-purple-600 animate-pulse" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+            </div>
+          </div>
+          <h2 className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-2">
+            Đang tóm tắt nội dung
+          </h2>
+          <p className="text-gray-600 mb-2">AI đang phân tích các phiên chat...</p>
+          <p className="text-sm text-gray-400 mb-6">Quá trình này có thể mất vài phút</p>
+          
+          {/* Progress bar */}
+          <div className="w-full bg-gray-200 rounded-full h-2 mb-4 overflow-hidden">
+            <div className="h-full bg-gradient-to-r from-purple-500 to-pink-500 rounded-full animate-pulse" style={{width: '75%'}}></div>
+          </div>
+          
+          <div className="flex justify-center gap-2">
+            <div className="w-3 h-3 bg-purple-500 rounded-full animate-bounce" style={{animationDelay: '0ms'}}></div>
+            <div className="w-3 h-3 bg-pink-500 rounded-full animate-bounce" style={{animationDelay: '150ms'}}></div>
+            <div className="w-3 h-3 bg-purple-500 rounded-full animate-bounce" style={{animationDelay: '300ms'}}></div>
+          </div>
         </div>
       </div>
     );
@@ -144,17 +327,119 @@ export default function AdminDashboard() {
               </div>
             </div>
 
-            {/* Nút đăng xuất */}
-            <Link
-              href="/"
-              onClick={() => localStorage.removeItem("admin")}
-              className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-xl font-semibold shadow-lg hover:from-red-600 hover:to-red-700 transition-all transform hover:scale-105"
-            >
-              <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-              </svg>
-              <span>Đăng xuất</span>
-            </Link>
+            <div className="flex gap-3 flex-wrap">
+              {/* Nút Phân Tích */}
+              <Link
+                href="/admin/analytics"
+                className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-indigo-500 to-indigo-600 text-white rounded-xl font-semibold shadow-lg hover:from-indigo-600 hover:to-indigo-700 transition-all transform hover:scale-105"
+              >
+                <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                </svg>
+                <span>Phân Tích Dữ Liệu</span>
+              </Link>
+
+              {/* Nút tạo lại tóm tắt */}
+              <button
+                onClick={handleRegenerateSummaries}
+                disabled={regenerating}
+                className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-purple-500 to-purple-600 text-white rounded-xl font-semibold shadow-lg hover:from-purple-600 hover:to-purple-700 transition-all transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                </svg>
+                <span>{regenerating ? 'Đang xử lý...' : 'Tạo lại tóm tắt'}</span>
+              </button>
+
+              {/* Nút đăng xuất */}
+              <Link
+                href="/"
+                onClick={() => localStorage.removeItem("admin")}
+                className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-xl font-semibold shadow-lg hover:from-red-600 hover:to-red-700 transition-all transform hover:scale-105"
+              >
+                <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                </svg>
+                <span>Đăng xuất</span>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Stats Overview */}
+      <div className="max-w-7xl mx-auto mb-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          {/* Total Sessions */}
+          <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl shadow-xl p-6 text-white">
+            <div className="flex items-center justify-between mb-4">
+              <div className="bg-white/20 p-3 rounded-xl">
+                <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                </svg>
+              </div>
+              <div className="text-right">
+                <div className="text-3xl font-bold">{stats?.totalSessions || 0}</div>
+                <div className="text-sm opacity-80">Tổng phiên chat</div>
+              </div>
+            </div>
+            <div className="text-xs opacity-75">
+              +{stats?.todaySessions || 0} hôm nay
+            </div>
+          </div>
+
+          {/* Total Messages */}
+          <div className="bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl shadow-xl p-6 text-white">
+            <div className="flex items-center justify-between mb-4">
+              <div className="bg-white/20 p-3 rounded-xl">
+                <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
+                </svg>
+              </div>
+              <div className="text-right">
+                <div className="text-3xl font-bold">{stats?.totalMessages || 0}</div>
+                <div className="text-sm opacity-80">Tổng tin nhắn</div>
+              </div>
+            </div>
+            <div className="text-xs opacity-75">
+              Trung bình {Math.round((stats?.totalMessages || 0) / (stats?.totalSessions || 1))} tin/phiên
+            </div>
+          </div>
+
+          {/* Emergency Sessions */}
+          <div className="bg-gradient-to-br from-red-500 to-red-600 rounded-2xl shadow-xl p-6 text-white">
+            <div className="flex items-center justify-between mb-4">
+              <div className="bg-white/20 p-3 rounded-xl">
+                <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd"/>
+                </svg>
+              </div>
+              <div className="text-right">
+                <div className="text-3xl font-bold">{stats?.emergencySessions || 0}</div>
+                <div className="text-sm opacity-80">Phiên khẩn cấp</div>
+              </div>
+            </div>
+            <div className="text-xs opacity-75">
+              {stats?.totalSessions > 0 ? Math.round((stats?.emergencySessions || 0) / stats.totalSessions * 100) : 0}% tổng số
+            </div>
+          </div>
+
+          {/* Active Users */}
+          <div className="bg-gradient-to-br from-green-500 to-green-600 rounded-2xl shadow-xl p-6 text-white">
+            <div className="flex items-center justify-between mb-4">
+              <div className="bg-white/20 p-3 rounded-xl">
+                <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+              </div>
+              <div className="text-right">
+                <div className="text-3xl font-bold">{stats?.activeUsers || 0}</div>
+                <div className="text-sm opacity-80">Người dùng</div>
+              </div>
+            </div>
+            <div className="text-xs opacity-75">
+              Hoạt động 7 ngày qua
+            </div>
           </div>
         </div>
       </div>
@@ -181,7 +466,7 @@ export default function AdminDashboard() {
           {sessions.map((session, idx) => (
             <button
               key={session.id}
-              onClick={() => setSelected(idx)}
+              onClick={() => loadSessionMessages(session.id, idx)}
               className={`w-full text-left p-3 sm:p-4 rounded-lg sm:rounded-xl border-2 bg-white shadow hover:shadow-xl transition-all duration-300 flex flex-col gap-1 ${selected === idx ? "ring-2 ring-blue-400" : ""} ${deleted === session.id ? "opacity-0 scale-95 pointer-events-none" : "opacity-100 scale-100"} ${session.isEmergency ? "border-red-500 bg-red-50 animate-pulse" : session.processed ? "border-green-400 bg-green-50" : "border-blue-200"}`}
               style={{ transitionProperty: "opacity,transform" }}
             >

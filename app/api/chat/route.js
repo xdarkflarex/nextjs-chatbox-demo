@@ -110,23 +110,43 @@ function searchRAG(userQuery, ragData) {
     item.text.includes('Câu hỏi thường gặp')
   );
   
+  // 3. Tìm kiếm trong documents mới (từ Word/Excel)
+  const documents = ragData.filter(item => 
+    item.category === 'document' && 
+    item.answer
+  );
+  
   // Chuẩn bị dữ liệu cho Fuse.js
-  const fuseData = faqs.map(item => {
-    const qa = extractQA(item.text);
-    return {
+  const fuseData = [
+    // FAQ từ Excel cũ
+    ...faqs.map(item => {
+      const qa = extractQA(item.text);
+      return {
+        ...item,
+        normText: normalize(item.text),
+        normQuestion: normalize(qa.question),
+        question: qa.question,
+        answer: qa.answer,
+        source: 'faq'
+      };
+    }),
+    // Documents mới
+    ...documents.map(item => ({
       ...item,
-      normText: normalize(item.text),
-      normQuestion: normalize(qa.question),
-      question: qa.question,
-      answer: qa.answer
-    };
-  });
+      normText: normalize(item.answer || ''),
+      normQuestion: normalize(item.question || ''),
+      question: item.question || '',
+      answer: item.answer || '',
+      source: 'document'
+    }))
+  ];
   
   // Tìm kiếm với Fuse.js (fuzzy matching)
   const fuse = new Fuse(fuseData, {
     keys: [
-      { name: 'normQuestion', weight: 0.7 },
-      { name: 'normText', weight: 0.3 }
+      { name: 'normQuestion', weight: 0.5 },
+      { name: 'normText', weight: 0.3 },
+      { name: 'keywords', weight: 0.2 }
     ],
     threshold: 0.4,
     includeScore: true,
@@ -403,12 +423,12 @@ NHIỆM VỤ:
    ${userRole === 'parent' ? '- Tên và lớp của con\n   - Vấn đề cụ thể\n   - Mức độ khẩn cấp' : ''}
 
 2. Đánh giá mức độ nghiêm trọng:
-   - RED (Cực kỳ khẩn cấp): Tự hại, bạo lực, nguy hiểm tính mạng → Yêu cầu liên hệ ngay 111 hoặc GVCN
-   - YELLOW (Khẩn cấp): Cần can thiệp trong 24h → Đề xuất gặp GVCN/tâm lý
+   - RED (Cực kỳ khẩn cấp): Tự hại, bạo lực, nguy hiểm tính mạng → Yêu cầu liên hệ ngay 111 hoặc Cô Lan Phương
+   - YELLOW (Khẩn cấp): Cần can thiệp trong 24h → Đề xuất gặp Cô Lan Phương hoặc chuyên viên tâm lý
    - GREEN (Quan trọng): Cần theo dõi → Hướng dẫn và hẹn gặp
 
 3. Đưa ra hành động cụ thể:
-   - Số điện thoại liên hệ khẩn cấp
+   - THÔNG TIN LIÊN HỆ KHẨN CẤP: Cô Lan Phương - SĐT 0905887689 (Giáo viên tư vấn tâm lý trường THCS Nguyễn Huệ)
    - Bước tiếp theo rõ ràng
    - Động viên và đảm bảo sẽ được hỗ trợ
 
@@ -433,9 +453,13 @@ ${last}
 - Giọng điệu: ${config.tone}
 - Dựa trên các tình huống tương tự và quy định trường học ở trên
 - Mức độ tình huống: ${level.toUpperCase()}
-  ${level === 'red' ? '→ Ưu tiên an toàn, đề xuất liên hệ người lớn/chuyên gia ngay' : ''}
-  ${level === 'yellow' ? '→ Gợi ý giải pháp và khuyến nghị gặp GVCN/chuyên viên tâm lý' : ''}
-  ${level === 'green' ? '→ Cung cấp hướng dẫn cụ thể và động viên' : ''}
+  ${level === 'red' ? '→ Ưu tiên an toàn, đề xuất liên hệ Cô Lan Phương (0905887689) hoặc 111 ngay' : ''}
+  ${level === 'yellow' ? '→ Gợi ý giải pháp và khuyến nghị gặp Cô Lan Phương (0905887689) hoặc chuyên viên tâm lý' : ''}
+  ${level === 'green' ? '→ Cung cấp hướng dẫn cụ thể và động viên. Nếu cần hỗ trợ thêm, có thể liên hệ Cô Lan Phương (0905887689)' : ''}
+
+THÔNG TIN LIÊN HỆ HỖ TRỢ:
+- Cô Lan Phương - Giáo viên tư vấn tâm lý: 0905887689
+- Đường dây nóng khẩn cấp: 111
 
 LƯU Ý ĐỐI VỚI ${config.title}:
 ${config.specialNote}

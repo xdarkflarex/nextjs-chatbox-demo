@@ -7,6 +7,7 @@ import { v4 as uuidv4 } from "uuid";
 export default function ChatWidget() {
   const [sessionId, setSessionId] = useState(uuidv4());
   const [userRole, setUserRole] = useState(null); // 'student', 'teacher', 'parent'
+  const [userClass, setUserClass] = useState(null); // Lớp của học sinh (optional)
   const [isEmergency, setIsEmergency] = useState(false); // Đánh dấu phiên khẩn cấp
   const [emergencyInfo, setEmergencyInfo] = useState(null); // Thông tin khẩn cấp
   const [messages, setMessages] = useState([
@@ -29,6 +30,21 @@ export default function ChatWidget() {
     setMessages((m) => [...m, userMsg]);
     setInput("");
     setLoading(true);
+    
+    // Detect lớp nếu là học sinh và chưa có userClass
+    if (userRole === 'student' && !userClass) {
+      const classPattern = /^(\d{1,2})\/(\d{1,2})$/; // Pattern: 6/1, 7/2, etc.
+      if (classPattern.test(content)) {
+        setUserClass(content);
+        setMessages((m) => [...m, { 
+          role: "assistant", 
+          content: `Cảm ơn em! Mình đã ghi nhận em học lớp ${content}. Bây giờ em có thể hỏi mình bất cứ điều gì nhé! 😊` 
+        }]);
+        setLoading(false);
+        return; // Không gọi API, chỉ lưu lớp
+      }
+    }
+    
     try {
       const res = await fetch("/api/chat", {
         method: "POST",
@@ -62,16 +78,16 @@ export default function ChatWidget() {
     }
   }
 
-  // Câu hỏi gợi ý theo vai trò
+  // Câu hỏi gợi ý theo vai trò (Chỉ về tâm lý học đường - tính năng đã hoàn thiện)
   const quickQuestions = {
     student: [
-      "Lập kế hoạch ôn 7 ngày cho Toán",
-      "Mẹo tập trung khi học 30 phút",
-      "Em đang căng thẳng trước kiểm tra",
       "Bạn bè trêu chọc – mình nên làm gì?",
-      "Tra cứu quy định xin phép nghỉ học",
-      "Thông tin về cuộc thi học sinh giỏi",
-      "Lịch kiểm tra giữa kỳ là khi nào?"
+      "Em đang căng thẳng trước kiểm tra",
+      "Nếu em bị bạn bè trêu chọc thì nên làm gì?",
+      "Mình cảm thấy cô đơn ở trường",
+      "Làm sao để tự tin hơn khi nói trước lớp?",
+      "Em sợ đi học vì bị bắt nạt",
+      "Cách giảm stress khi áp lực học tập"
     ],
     teacher: [
       "Cách quản lý lớp học hiệu quả",
@@ -102,10 +118,19 @@ export default function ChatWidget() {
       teacher: 'Giáo viên',
       parent: 'Phụ huynh'
     };
-    setMessages((m) => [...m, 
-      { role: "user", content: `Tôi là ${roleNames[role]}` },
-      { role: "assistant", content: `Chào ${roleNames[role]}! Mình có thể giúp gì cho bạn? Bạn có thể chọn một trong các câu hỏi gợi ý bên dưới hoặc nhập câu hỏi của riêng bạn.` }
-    ]);
+    
+    // Nếu là học sinh, hỏi lớp
+    if (role === 'student') {
+      setMessages((m) => [...m, 
+        { role: "user", content: `Tôi là ${roleNames[role]}` },
+        { role: "assistant", content: `Chào em! Em học lớp nào? (Ví dụ: 6/1, 7/2, 8/3)` }
+      ]);
+    } else {
+      setMessages((m) => [...m, 
+        { role: "user", content: `Tôi là ${roleNames[role]}` },
+        { role: "assistant", content: `Chào ${roleNames[role]}! Mình có thể giúp gì cho bạn? Bạn có thể chọn một trong các câu hỏi gợi ý bên dưới hoặc nhập câu hỏi của riêng bạn.` }
+      ]);
+    }
   }
 
   async function handleEmergency() {
@@ -127,7 +152,7 @@ export default function ChatWidget() {
   }
 
   // Hàm lưu session vào localStorage (đồng bộ để đảm bảo lưu được khi đóng tab)
-  function saveSession(messages) {
+  async function saveSession(messages) {
     try {
       setSaveStatus("saving");
       
@@ -136,35 +161,41 @@ export default function ChatWidget() {
         sid = uuidv4();
         setSessionId(sid);
       }
-      // Lấy danh sách session hiện có
-      let sessions = [];
-      try {
-        sessions = JSON.parse(localStorage.getItem("chatSessions")) || [];
-      } catch {}
-      
-      // Tìm và cập nhật hoặc thêm mới session
-      const idx = sessions.findIndex(s => s.sessionId === sid);
-      const sessionData = { 
-        sessionId: sid, 
-        id: sid, // Thêm id để admin dễ xử lý
-        messages,
-        userRole,
-        isEmergency,
-        emergencyInfo,
-        time: Date.now()
+
+      // Chuẩn bị emergency data
+      const emergencyData = isEmergency ? {
+        isEmergency: true,
+        level: emergencyInfo?.level || 'YELLOW',
+        keywords: emergencyInfo?.keywords || []
+      } : {
+        isEmergency: false,
+        level: 'GREEN',
+        keywords: []
       };
-      
-      if (idx >= 0) {
-        sessions[idx] = sessionData;
+
+      // Gửi lên Supabase
+      const response = await fetch('/api/sessions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          sessionId: sid,
+          messages: messages,
+          userRole: userRole,
+          userClass: userClass,
+          emergencyData: emergencyData
+        })
+      });
+
+      const data = await response.json();
+
+      if (data.ok) {
+        console.log('✅ Session saved to Supabase:', sid, 'Emergency:', isEmergency);
+        setSaveStatus("saved");
+        setTimeout(() => setSaveStatus(""), 2000);
       } else {
-        sessions.push(sessionData);
+        console.error('❌ Error saving to Supabase:', data.error);
+        setSaveStatus("");
       }
-      
-      localStorage.setItem("chatSessions", JSON.stringify(sessions));
-      console.log('✅ Session saved:', sid, 'Emergency:', isEmergency);
-      
-      setSaveStatus("saved");
-      setTimeout(() => setSaveStatus(""), 2000); // Ẩn sau 2 giây
     } catch (error) {
       console.error('❌ Error saving session:', error);
       setSaveStatus("");
