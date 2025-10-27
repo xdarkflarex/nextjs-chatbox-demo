@@ -360,6 +360,62 @@ export async function GET(req) {
 }
 
 /**
+ * PATCH /api/sessions
+ * Cập nhật trạng thái session (is_processed, processed_at, processed_by)
+ */
+export async function PATCH(req) {
+  try {
+    const { id, is_processed, processed_by } = await req.json();
+
+    if (!id) {
+      return NextResponse.json(
+        { ok: false, error: 'Session ID required' },
+        { status: 400 }
+      );
+    }
+
+    const updateData = {
+      is_processed: is_processed,
+      updated_at: new Date().toISOString()
+    };
+
+    // Nếu đánh dấu đã xử lý, lưu thời gian và người xử lý
+    if (is_processed) {
+      updateData.processed_at = new Date().toISOString();
+      if (processed_by) {
+        updateData.processed_by = processed_by;
+      }
+    } else {
+      // Nếu bỏ đánh dấu, xóa thông tin xử lý
+      updateData.processed_at = null;
+      updateData.processed_by = null;
+    }
+
+    const { error } = await supabaseAdmin
+      .from('chat_sessions')
+      .update(updateData)
+      .eq('id', id);
+
+    if (error) {
+      console.error('❌ Error updating session:', error);
+      return NextResponse.json(
+        { ok: false, error: error.message },
+        { status: 500 }
+      );
+    }
+
+    return NextResponse.json({ ok: true });
+
+  } catch (error) {
+    console.error('❌ PATCH session error:', error);
+    return NextResponse.json(
+      { ok: false, error: error.message },
+      { status: 500 }
+    );
+  }
+}
+
+/**
  * DELETE /api/sessions
  * Xóa một session (và tất cả messages liên quan)
  */

@@ -135,16 +135,23 @@ html, body {
   animation: slideUp 0.4s ease-out;
 }
 
-/* Floating animation for background */
+/* Floating animation for background - Enhanced */
 @keyframes float {
   0%, 100% {
-    transform: translate(0, 0) scale(1);
+    transform: translate(0, 0) scale(1) rotate(0deg);
+    opacity: 0.2;
   }
-  33% {
-    transform: translate(30px, -30px) scale(1.1);
+  25% {
+    transform: translate(40px, -40px) scale(1.15) rotate(5deg);
+    opacity: 0.25;
   }
-  66% {
-    transform: translate(-20px, 20px) scale(0.9);
+  50% {
+    transform: translate(-30px, 30px) scale(0.95) rotate(-5deg);
+    opacity: 0.15;
+  }
+  75% {
+    transform: translate(20px, -20px) scale(1.05) rotate(3deg);
+    opacity: 0.22;
   }
 }
 
@@ -160,6 +167,27 @@ html, body {
 .animate-float-slow {
   animation: float 30s ease-in-out infinite;
   animation-delay: -10s;
+}
+
+/* Shimmer effect for cards */
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer 3s infinite;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(255, 255, 255, 0.3) 50%,
+    transparent 100%
+  );
+  background-size: 1000px 100%;
 }
 
 /* Pulse animation */

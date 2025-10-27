@@ -231,9 +231,38 @@ export default function ChatWidget() {
   }, [messages, sessionId, userRole, isEmergency, emergencyInfo]);
 
   // Nút kết thúc chat
-  function endChat() {
-    saveSession(messages);
-    router.push("/thank-you");
+  async function endChat() {
+    try {
+      // 1. Lưu session trước
+      await saveSession(messages);
+      
+      // 2. Gọi API finalize để tạo tóm tắt chất lượng cao
+      setSaveStatus("saving");
+      const response = await fetch('/api/sessions/finalize', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ sessionId })
+      });
+      
+      const data = await response.json();
+      
+      if (data.ok) {
+        console.log(`✅ Session finalized with summary: "${data.summary}"`);
+        setSaveStatus("saved");
+      } else {
+        console.warn('⚠️ Finalize failed:', data.error);
+      }
+      
+      // 3. Chuyển đến trang thank you
+      setTimeout(() => {
+        router.push("/thank-you");
+      }, 500);
+      
+    } catch (error) {
+      console.error('❌ Error ending chat:', error);
+      // Vẫn chuyển trang dù có lỗi
+      router.push("/thank-you");
+    }
   }
 
   return (
@@ -303,12 +332,6 @@ export default function ChatWidget() {
                 <span className="truncate">{q}</span>
               </button>
             ))}
-            <button onClick={handleEmergency} className="quick-question-btn flex items-center gap-1 text-xs px-2.5 sm:px-3 py-1 rounded-full border border-red-400 text-red-600 bg-white hover:bg-red-100 font-semibold transition shadow">
-              <span className="inline-block flex-shrink-0">
-                <svg className="h-3 w-3 sm:h-4 sm:w-4 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01" /></svg>
-              </span>
-              <span>Cần hỗ trợ khẩn</span>
-            </button>
           </>
         )}
       </div>

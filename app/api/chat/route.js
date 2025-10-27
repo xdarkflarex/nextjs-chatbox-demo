@@ -2,51 +2,94 @@ import fs from "fs";
 import path from "path";
 import Fuse from "fuse.js";
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import { getNextApiKey, markKeyError, resetKeyErrors } from "../../../lib/gemini-rotator.js";
 
 async function callGeminiAPI(prompt) {
-  try {
-    const apiKey = process.env.GEMINI_API_KEY;
-    console.log('API Key exists:', !!apiKey);
-    console.log('API Key length:', apiKey?.length || 0);
+  const maxRetries = 3;
+  let lastError = null;
+  
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    let currentApiKey = null;
     
-    if (!apiKey) {
-      console.error('Missing GEMINI_API_KEY');
-      return 'Đang tạm thời không thể kết nối dịch vụ AI. Vui lòng thử lại sau.';
+    try {
+      // Lấy API key tiếp theo (rotation)
+      currentApiKey = getNextApiKey();
+      
+      if (!currentApiKey) {
+        console.error('❌ Missing GEMINI_API_KEY in .env.local');
+        return 'Đang tạm thời không thể kết nối dịch vụ AI. Vui lòng thử lại sau.';
+      }
+
+      // Khởi tạo Gemini AI với API key
+      const genAI = new GoogleGenerativeAI(currentApiKey);
+      // Sử dụng model mới nhất: gemini-2.0-flash-exp
+      const model = genAI.getGenerativeModel({ 
+        model: "gemini-2.0-flash-exp",
+        generationConfig: {
+          temperature: 0.7,
+          topP: 0.95,
+          topK: 40,
+          maxOutputTokens: 2048,
+        }
+      });
+
+      console.log(`🔄 Attempt ${attempt}/${maxRetries} - Calling Gemini 2.0 Flash with prompt length:`, String(prompt).length);
+
+      // Gọi API để tạo nội dung
+      const result = await model.generateContent(prompt);
+      const response = await result.response;
+      const text = response.text();
+
+      console.log('✅ Gemini 2.0 Flash response received successfully');
+      
+      // Reset error count khi thành công
+      resetKeyErrors(currentApiKey);
+      
+      return text;
+
+    } catch (error) {
+      lastError = error;
+      console.error(`❌ Attempt ${attempt}/${maxRetries} failed:`, error.message);
+      
+      // Xử lý các loại lỗi cụ thể
+      if (error.message?.includes('API key') || error.message?.includes('API_KEY_INVALID')) {
+        return 'Lỗi xác thực API key. Vui lòng kiểm tra cấu hình.';
+      }
+      if (error.message?.includes('blocked') || error.message?.includes('safety')) {
+        return 'Xin lỗi, nội dung này không thể được xử lý. Vui lòng thử câu hỏi khác.';
+      }
+      
+      // Nếu là lỗi 503 hoặc overloaded, đánh dấu key lỗi và thử key khác
+      if (error.message?.includes('503') || 
+          error.message?.includes('429') ||
+          error.message?.includes('overloaded') ||
+          error.message?.includes('quota')) {
+        
+        // Đánh dấu key hiện tại bị lỗi
+        if (currentApiKey) {
+          markKeyError(currentApiKey, error);
+        }
+        
+        if (attempt < maxRetries) {
+          // Exponential backoff: 1s, 2s, 4s (ngắn hơn vì có rotation)
+          const delay = Math.pow(2, attempt - 1) * 1000;
+          console.log(`⏳ Switching to next API key and retrying in ${delay}ms...`);
+          await new Promise(resolve => setTimeout(resolve, delay));
+          continue; // Thử key tiếp theo
+        }
+        
+        // Hết retries
+        return 'Hệ thống đang quá tải do nhiều người dùng. Vui lòng thử lại sau 1-2 phút. 🙏';
+      }
+      
+      // Lỗi khác
+      if (attempt === maxRetries) {
+        return `Đã xảy ra lỗi khi xử lý yêu cầu: ${error.message}`;
+      }
     }
-
-    // Khởi tạo Gemini AI với API key
-    const genAI = new GoogleGenerativeAI(apiKey);
-    // Sử dụng model mới nhất: gemini-2.0-flash-exp (experimental - đang hoạt động)
-    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash-exp" });
-
-    console.log('Calling Gemini API with prompt length:', String(prompt).length);
-
-    // Gọi API để tạo nội dung
-    const result = await model.generateContent(prompt);
-    const response = await result.response;
-    const text = response.text();
-
-    console.log('Gemini response received successfully');
-    return text;
-
-  } catch (error) {
-    console.error('Error calling Gemini API:', error);
-    console.error('Error message:', error.message);
-    console.error('Error stack:', error.stack);
-    
-    // Xử lý các loại lỗi cụ thể
-    if (error.message?.includes('API key') || error.message?.includes('API_KEY_INVALID')) {
-      return 'Lỗi xác thực API key. Vui lòng kiểm tra cấu hình.';
-    }
-    if (error.message?.includes('quota') || error.message?.includes('limit')) {
-      return 'Đã vượt quá giới hạn sử dụng API. Vui lòng thử lại sau.';
-    }
-    if (error.message?.includes('blocked') || error.message?.includes('safety')) {
-      return 'Xin lỗi, nội dung này không thể được xử lý. Vui lòng thử câu hỏi khác.';
-    }
-    
-    return `Đã xảy ra lỗi khi xử lý yêu cầu: ${error.message}`;
   }
+  
+  return `Đã xảy ra lỗi khi xử lý yêu cầu: ${lastError?.message || 'Unknown error'}`;
 }
 
 // Hàm phát hiện mức độ khẩn cấp
@@ -423,12 +466,12 @@ NHIỆM VỤ:
    ${userRole === 'parent' ? '- Tên và lớp của con\n   - Vấn đề cụ thể\n   - Mức độ khẩn cấp' : ''}
 
 2. Đánh giá mức độ nghiêm trọng:
-   - RED (Cực kỳ khẩn cấp): Tự hại, bạo lực, nguy hiểm tính mạng → Yêu cầu liên hệ ngay 111 hoặc Cô Lan Phương
-   - YELLOW (Khẩn cấp): Cần can thiệp trong 24h → Đề xuất gặp Cô Lan Phương hoặc chuyên viên tâm lý
+   - RED (Cực kỳ nghiêm trọng): Tự hại, bạo lực, nguy hiểm tính mạng → Yêu cầu liên hệ ngay 111 hoặc cán bộ tư vấn trường
+   - YELLOW (Cần hỗ trợ): Cần can thiệp trong 24h → Đề xuất gặp cán bộ tư vấn trường hoặc GVCN
    - GREEN (Quan trọng): Cần theo dõi → Hướng dẫn và hẹn gặp
 
 3. Đưa ra hành động cụ thể:
-   - THÔNG TIN LIÊN HỆ KHẨN CẤP: Cô Lan Phương - SĐT 0905887689 (Giáo viên tư vấn tâm lý trường THCS Nguyễn Huệ)
+   - Khuyến nghị liên hệ cán bộ tư vấn trường THCS Nguyễn Huệ hoặc GVCN của lớp
    - Bước tiếp theo rõ ràng
    - Động viên và đảm bảo sẽ được hỗ trợ
 
@@ -453,13 +496,14 @@ ${last}
 - Giọng điệu: ${config.tone}
 - Dựa trên các tình huống tương tự và quy định trường học ở trên
 - Mức độ tình huống: ${level.toUpperCase()}
-  ${level === 'red' ? '→ Ưu tiên an toàn, đề xuất liên hệ Cô Lan Phương (0905887689) hoặc 111 ngay' : ''}
-  ${level === 'yellow' ? '→ Gợi ý giải pháp và khuyến nghị gặp Cô Lan Phương (0905887689) hoặc chuyên viên tâm lý' : ''}
-  ${level === 'green' ? '→ Cung cấp hướng dẫn cụ thể và động viên. Nếu cần hỗ trợ thêm, có thể liên hệ Cô Lan Phương (0905887689)' : ''}
+  ${level === 'red' ? '→ Ưu tiên an toàn, đề xuất liên hệ cán bộ tư vấn trường hoặc đường dây nóng 111 ngay' : ''}
+  ${level === 'yellow' ? '→ Gợi ý giải pháp và khuyến nghị gặp cán bộ tư vấn trường hoặc GVCN' : ''}
+  ${level === 'green' ? '→ Cung cấp hướng dẫn cụ thể và động viên. Nếu cần hỗ trợ thêm, có thể liên hệ cán bộ tư vấn trường hoặc GVCN' : ''}
 
 THÔNG TIN LIÊN HỆ HỖ TRỢ:
-- Cô Lan Phương - Giáo viên tư vấn tâm lý: 0905887689
-- Đường dây nóng khẩn cấp: 111
+- Cán bộ tư vấn trường THCS Nguyễn Huệ
+- Giáo viên chủ nhiệm của lớp (nếu biết lớp)
+- Đường dây nóng: 111
 
 LƯU Ý ĐỐI VỚI ${config.title}:
 ${config.specialNote}

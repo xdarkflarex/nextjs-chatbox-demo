@@ -5,18 +5,14 @@ import Link from "next/link";
 import Image from "next/image";
 
 export default function Page() {
-  const [showWelcome, setShowWelcome] = useState(false);
+  const [showWelcome, setShowWelcome] = useState(true); // Luôn hiện popup
 
   useEffect(() => {
-    // Kiểm tra xem đã xem popup chưa
-    const hasSeenWelcome = localStorage.getItem('hasSeenWelcome');
-    if (!hasSeenWelcome) {
-      setShowWelcome(true);
-    }
+    // Popup luôn hiện mỗi lần load trang
+    setShowWelcome(true);
   }, []);
 
   const handleCloseWelcome = () => {
-    localStorage.setItem('hasSeenWelcome', 'true');
     setShowWelcome(false);
   };
 
@@ -106,12 +102,21 @@ export default function Page() {
         </div>
       )}
 
-      <main className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-100 p-4 md:p-6 lg:p-8 relative overflow-hidden">
-        {/* Animated Background */}
+      <main className="min-h-screen bg-gradient-to-br from-blue-100 via-indigo-100 to-purple-100 p-4 md:p-6 lg:p-8 relative overflow-hidden">
+        {/* Animated Background - Enhanced */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-0 left-0 w-96 h-96 bg-blue-200 rounded-full opacity-20 blur-3xl animate-float"></div>
-          <div className="absolute top-1/4 right-0 w-80 h-80 bg-purple-200 rounded-full opacity-20 blur-3xl animate-float-delayed"></div>
-          <div className="absolute bottom-0 left-1/3 w-72 h-72 bg-pink-200 rounded-full opacity-20 blur-3xl animate-float-slow"></div>
+          {/* Gradient overlays */}
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-200/40 via-transparent to-purple-200/40"></div>
+          
+          {/* Floating orbs - Tăng opacity để thấy rõ hơn */}
+          <div className="absolute top-0 left-0 w-96 h-96 bg-gradient-to-br from-blue-400 to-cyan-300 rounded-full opacity-30 blur-3xl animate-float"></div>
+          <div className="absolute top-1/4 right-0 w-80 h-80 bg-gradient-to-br from-purple-400 to-pink-300 rounded-full opacity-30 blur-3xl animate-float-delayed"></div>
+          <div className="absolute bottom-0 left-1/3 w-72 h-72 bg-gradient-to-br from-pink-400 to-rose-300 rounded-full opacity-25 blur-3xl animate-float-slow"></div>
+          <div className="absolute top-1/2 left-1/4 w-64 h-64 bg-gradient-to-br from-indigo-400 to-blue-300 rounded-full opacity-25 blur-3xl animate-float"></div>
+          <div className="absolute bottom-1/4 right-1/4 w-56 h-56 bg-gradient-to-br from-violet-400 to-purple-300 rounded-full opacity-20 blur-3xl animate-float-delayed"></div>
+          
+          {/* Subtle grid pattern */}
+          <div className="absolute inset-0 opacity-[0.02]" style={{backgroundImage: 'radial-gradient(circle, #000 1px, transparent 1px)', backgroundSize: '50px 50px'}}></div>
         </div>
       <div className="max-w-7xl mx-auto">
         {/* Layout 2 cột: Trái (Info) + Phải (Chat) */}
@@ -203,8 +208,19 @@ export default function Page() {
               </div>
             </div>
 
+            {/* Nút xem lại hướng dẫn */}
+            <button
+              onClick={() => setShowWelcome(true)}
+              className="w-full bg-gradient-to-r from-green-500 to-emerald-500 text-white py-3 px-4 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all transform hover:scale-105 flex items-center justify-center gap-2"
+            >
+              <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              Xem lại hướng dẫn
+            </button>
+
             {/* Card Đăng nhập Admin */}
-            <div className="bg-white rounded-2xl shadow-xl p-6 border-2 border-gray-200">
+            <div className="bg-white rounded-2xl shadow-xl p-6 border-2 border-gray-200 mt-6">
               <div className="flex items-center gap-3 mb-3">
                 <div className="bg-gray-100 p-2 rounded-lg">
                   <svg className="h-6 w-6 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -237,9 +253,9 @@ export default function Page() {
                 Lưu ý quan trọng
               </h3>
               <p className="text-xs text-gray-600 leading-relaxed">
-                Nếu bạn gặp tình huống <strong className="text-red-600">khẩn cấp</strong>, 
-                vui lòng nhấn nút <strong>"Cần hỗ trợ khẩn"</strong> trong khung chat 
-                hoặc liên hệ trực tiếp với giáo viên chủ nhiệm.
+                Nếu bạn cần hỗ trợ, vui lòng liên hệ trực tiếp với 
+                <strong className="text-blue-600"> cán bộ tư vấn trường</strong> hoặc 
+                <strong className="text-blue-600"> giáo viên chủ nhiệm</strong> của lớp.
               </p>
             </div>
 

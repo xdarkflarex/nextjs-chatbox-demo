@@ -56,7 +56,9 @@ export default function AdminDashboard() {
           totalMessages: s.total_messages,
           summary: s.session_name,
           messages: [], // Sẽ load khi click vào session
-          processed: false
+          processed: s.is_processed || false, // Đọc từ database
+          processedAt: s.processed_at,
+          processedBy: s.processed_by
         }));
         
         setSessions(formattedSessions);
@@ -179,14 +181,40 @@ export default function AdminDashboard() {
 
   async function handleProcess(id) {
     setProcessing(id);
-    setTimeout(() => {
-      // Cập nhật trạng thái processed cho session
-      const updated = sessions.map(s =>
-        s.id === id ? { ...s, processed: true } : s
-      );
-      setSessions(updated);
+    
+    try {
+      // Gọi API để cập nhật trạng thái trong database
+      const response = await fetch('/api/sessions', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          id, 
+          is_processed: true,
+          processed_by: 'admin' // Có thể lấy từ localStorage nếu có
+        })
+      });
+      
+      const data = await response.json();
+      
+      if (data.ok) {
+        // Cập nhật UI sau khi lưu thành công
+        setTimeout(() => {
+          const updated = sessions.map(s =>
+            s.id === id ? { ...s, processed: true } : s
+          );
+          setSessions(updated);
+          setProcessing(-1);
+        }, 400);
+      } else {
+        console.error('Error updating session:', data.error);
+        setProcessing(-1);
+        alert('Lỗi: Không thể cập nhật trạng thái');
+      }
+    } catch (error) {
+      console.error('Error updating session:', error);
       setProcessing(-1);
-    }, 600);
+      alert('Lỗi: ' + error.message);
+    }
   }
 
   async function loadSessionMessages(sessionId, index) {
