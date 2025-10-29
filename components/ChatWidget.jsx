@@ -31,7 +31,7 @@ export default function ChatWidget() {
     setInput("");
     setLoading(true);
     
-    // Detect lớp nếu là học sinh và chưa có userClass
+    // Detect lớp nếu là học sinh và chưa có userClass (không hỏi chủ động, chỉ detect khi học sinh tự nhắc)
     if (userRole === 'student' && !userClass) {
       const classPattern = /^(\d{1,2})\/(\d{1,2})$/; // Pattern: 6/1, 7/2, etc.
       if (classPattern.test(content)) {
@@ -119,11 +119,11 @@ export default function ChatWidget() {
       parent: 'Phụ huynh'
     };
     
-    // Nếu là học sinh, hỏi lớp
+    // Nếu là học sinh, chào hỏi thân thiện
     if (role === 'student') {
       setMessages((m) => [...m, 
         { role: "user", content: `Tôi là ${roleNames[role]}` },
-        { role: "assistant", content: `Chào em! Em học lớp nào? (Ví dụ: 6/1, 7/2, 8/3)` }
+        { role: "assistant", content: `Chào em! Hôm nay em thế nào rồi? Có điều gì mình có thể giúp em không? 😊` }
       ]);
     } else {
       setMessages((m) => [...m, 

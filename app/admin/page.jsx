@@ -489,7 +489,8 @@ export default function AdminDashboard() {
                   <p className="text-sm text-gray-500">{sessions.length} phiên</p>
                 </div>
               </div>
-        <div className="space-y-3">
+        {/* Danh sách phiên chat với thanh cuộn */}
+        <div className="space-y-3 max-h-[calc(100vh-400px)] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-blue-400 scrollbar-track-blue-100 hover:scrollbar-thumb-blue-500">
           {sessions.length === 0 && <div>Chưa có dữ liệu.</div>}
           {sessions.map((session, idx) => (
             <button
